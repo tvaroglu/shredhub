@@ -1,4 +1,5 @@
 import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     # class variable defined for CSRF protection within Flask-WTF (form) extension package
