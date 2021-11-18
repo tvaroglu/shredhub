@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+          <title>{{ title }} - Shredhub 🤙🏽</title>
+        {% else %}
+          <title>Welcome to Shredhub! 🤙🏽</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>Shredhub: <a href="/index">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
