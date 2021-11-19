@@ -1,5 +1,6 @@
 from app import db, login
 from datetime import datetime
+from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -19,6 +20,13 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        # see Gravatar docs for additional config options (default image, size, etc):
+        # https://en.gravatar.com/site/implement/images
+        # TODO: explore options for users to customize their own profile pictures
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

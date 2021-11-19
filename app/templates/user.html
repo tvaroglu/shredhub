@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table>
+        <tr valign="center">
+            <td><img style="border-radius:40%; padding-right:10px;" src="{{ user.avatar(128) }}"></td>
+            <td><h1>Shredder: {{ user.username }}</h1></td>
+        </tr>
+    </table>
+    <hr>
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+{% endblock %}

@@ -10,8 +10,14 @@ from werkzeug.urls import url_parse
 # decorator that protects app (function call) from unauthenticated ('anonymous') current_user
 @login_required
 def index():
-    # Jinja2 template engine (Flask extension) renders content dynamically to templates via passed in args:
+    # Jinja2 template engine (Flask extension) renders content dynamically to templates via passed in kwargs:
     return render_template('index.html', title='Home', user=current_user, posts=current_user.posts)
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user.html', user=user, posts=user.posts)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -23,7 +29,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Thanks for joining the party, fellow Shredder!')
+        flash('Thanks for joining the party, fellow Shred-head!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
