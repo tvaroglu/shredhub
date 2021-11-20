@@ -1,0 +1,35 @@
+2021-11-19 17:31:21,691 ERROR: Exception on /edit_profile [POST] [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 39, in edit_profile
+    return render_template('user.html', user=user, posts=current_user.posts)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/templating.py", line 147, in render_template
+    return _render(
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/templating.py", line 128, in _render
+    rv = template.render(context)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/jinja2/environment.py", line 1291, in render
+    self.environment.handle_exception()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/jinja2/environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/templates/user.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/templates/base.html", line 44, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/templates/user.html", line 6, in block 'content'
+    <td><img style="border-radius:40%; padding-right:10px;" src="{{ user.avatar(128) }}"></td>
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/jinja2/utils.py", line 84, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: 'function object' has no attribute 'avatar'
+2021-11-19 17:31:41,864 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-19 17:34:35,009 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-19 17:37:56,868 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-19 17:39:36,048 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
