@@ -15,7 +15,7 @@ class TestModels:
                 db.session.delete(u)
             for p in posts:
                 db.session.delete(p)
-        db.session.commit()
+            db.session.commit()
         assert len(User.query.all()) == 0
         assert len(Post.query.all()) == 0
 
@@ -70,4 +70,30 @@ class TestModels:
         assert split[2] == 'www.gravatar.com'
         assert split[3] == 'avatar'
         assert '?d=identicon&s=128' in split[-1]
+        TestModels.tear_down()
+
+    def test_follow(self):
+        TestModels.set_up()
+        self.user_1 = TestModels.dummy_user()
+        self.user_2 = User(username='guest', email='guest@example.com')
+        db.session.add(self.user_1)
+        db.session.add(self.user_2)
+        db.session.commit()
+        assert self.user_1.followed.all() == []
+        assert self.user_2.followed.all() == []
+
+        self.user_1.follow(self.user_2)
+        db.session.commit()
+        assert self.user_1.is_following(self.user_2) == True
+        assert self.user_1.followed.count() == 1
+        assert self.user_1.followed.first().username == self.user_2.username
+        assert self.user_2.is_following(self.user_1) == False
+        assert self.user_2.followers.count() == 1
+        assert self.user_2.followers.first().username == self.user_1.username
+
+        self.user_1.unfollow(self.user_2)
+        db.session.commit()
+        assert self.user_1.is_following(self.user_2) == False
+        assert self.user_1.followed.count() == 0
+        assert self.user_2.followers.count() == 0
         TestModels.tear_down()
