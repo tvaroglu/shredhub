@@ -6,6 +6,7 @@ from app.models import User, Post
 class TestModels:
     @classmethod
     def set_up(cls):
+        # change app config to use an in-memory version of db:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///'
         db.create_all()
         users = User.query.all()
@@ -33,7 +34,7 @@ class TestModels:
         )
         return cls.user
 
-    def test_attributes(self):
+    def test_user_attributes(self):
         TestModels.set_up()
         self.user = TestModels.dummy_user()
         db.session.add(self.user)
@@ -96,4 +97,56 @@ class TestModels:
         assert self.user_1.is_following(self.user_2) == False
         assert self.user_1.followed.count() == 0
         assert self.user_2.followers.count() == 0
+        TestModels.tear_down()
+
+    def test_post_attributes(self):
+        TestModels.set_up()
+        self.user = TestModels.dummy_user()
+        now = datetime.utcnow()
+        self.post = Post(body='test post', author=self.user, created_at=now)
+        db.session.add(self.user)
+        db.session.add(self.post)
+        db.session.commit()
+        assert len(Post.query.all()) == 1
+        assert isinstance(self.post, Post)
+        assert self.post.body == 'test post'
+        assert self.post.user_id == self.user.id
+        assert isinstance(self.post.created_at, datetime)
+        TestModels.tear_down()
+
+    def test_followed_posts(self):
+        TestModels.set_up()
+        # create four users:
+        self.user_1 = TestModels.dummy_user()
+        self.user_2 = User(username='guest', email='guest@example.com')
+        self.user_3 = User(username='mary', email='mary@example.com')
+        self.user_4 = User(username='david', email='david@example.com')
+        db.session.add_all([self.user_1, self.user_2, self.user_3, self.user_4])
+        # create four posts:
+        now = datetime.utcnow()
+        self.post_1 = Post(body='post from Admin', author=self.user_1,
+                  created_at=now + timedelta(seconds=1))
+        self.post_2 = Post(body='post from guest', author=self.user_2,
+                  created_at=now + timedelta(seconds=4))
+        self.post_3 = Post(body='post from mary', author=self.user_3,
+                  created_at=now + timedelta(seconds=3))
+        self.post_4 = Post(body='post from david', author=self.user_4,
+                  created_at=now + timedelta(seconds=2))
+        db.session.add_all([self.post_1, self.post_2, self.post_3, self.post_4])
+        db.session.commit()
+        # set up the followers:
+        self.user_1.follow(self.user_2)  # Admin follows guest
+        self.user_1.follow(self.user_4)  # Admin follows david
+        self.user_2.follow(self.user_3)  # guest follows mary
+        self.user_3.follow(self.user_4)  # mary follows david
+        db.session.commit()
+        # check the followed posts for each user:
+        self.followed_posts_1 = self.user_1.followed_posts().all()
+        self.followed_posts_2 = self.user_2.followed_posts().all()
+        self.followed_posts_3 = self.user_3.followed_posts().all()
+        self.followed_posts_4 = self.user_4.followed_posts().all()
+        assert self.followed_posts_1 == [self.post_2, self.post_4, self.post_1]
+        assert self.followed_posts_2 == [self.post_2, self.post_3]
+        assert self.followed_posts_3 == [self.post_3, self.post_4]
+        assert self.followed_posts_4 == [self.post_4]
         TestModels.tear_down()
