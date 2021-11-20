@@ -36,7 +36,7 @@ def edit_profile():
         current_user.updated_at = datetime.utcnow()
         db.session.commit()
         flash('Your changes have been saved.')
-        return render_template('user.html', user=current_user, posts=current_user.posts)
+        return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
