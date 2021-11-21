@@ -51,32 +51,24 @@ def follow(username):
     if form.validate_on_submit():
         user = User.query.filter_by(username=username).first()
         if user is None:
-            flash(f'User {username} not found.')
+            flash(f'User "{username}" not found.')
             return redirect(url_for('index'))
-        if user == current_user:
-            flash('You cannot follow yourself!')
-            return redirect(url_for('user', username=username))
-        current_user.follow(user)
-        db.session.commit()
-        flash(f'You are now following {username}!')
-        return redirect(url_for('user', username=username))
-    return redirect(url_for('index'))
-
-@app.route('/unfollow/<username>', methods=['POST'])
-@login_required
-def unfollow(username):
-    form = EmptyForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
-        if user is None:
-            flash(f'User {username} not found.')
-            return redirect(url_for('index'))
-        if user == current_user:
-            flash('You cannot unfollow yourself!')
-            return redirect(url_for('user', username=username))
-        current_user.unfollow(user)
-        db.session.commit()
-        flash(f'You are no longer following {username}.')
+        if 'follow' in request.args.getlist('action'):
+            if user == current_user:
+                flash('You cannot follow yourself!')
+                return redirect(url_for('user', username=username))
+            current_user.follow(user)
+            current_user.updated_at = datetime.utcnow()
+            db.session.commit()
+            flash(f'You are now following {username}!')
+        elif 'unfollow' in request.args.getlist('action'):
+            if user == current_user:
+                flash('You cannot unfollow yourself!')
+                return redirect(url_for('user', username=username))
+            current_user.unfollow(user)
+            current_user.updated_at = datetime.utcnow()
+            db.session.commit()
+            flash(f'You are no longer following {username}.')
         return redirect(url_for('user', username=username))
     return redirect(url_for('index'))
 

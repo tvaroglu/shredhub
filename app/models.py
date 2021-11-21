@@ -52,6 +52,7 @@ class User(UserMixin, db.Model):
             self.followed.remove(user)
 
     def is_following(self, user):
+        # 'c' is attribute of SQLAlchemy tables not defined as models:
         return self.followed.filter(
             followers.c.followed_id == user.id).count() > 0
 
