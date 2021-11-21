@@ -17,8 +17,15 @@ CREATE DATABASE
 
 ### Database Initialization:
 ```bash
+$ source venv/bin/activate
 (venv) $ flask db migrate
 (venv) $ flask db upgrade
+```
+
+### How to run the test suite:
+```bash
+$ source venv/bin/activate
+(venv) $ pytest --cov
 ```
 
 ### How to run the server:
