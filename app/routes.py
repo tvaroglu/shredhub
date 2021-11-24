@@ -1,6 +1,6 @@
 from app import app, db
 from app.models import User
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm
 from datetime import datetime
 from flask import render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
@@ -12,13 +12,21 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 # decorator that protects app (function call) from unauthenticated ('anonymous') current_user
 @login_required
 def index():
-    # Jinja2 template engine (Flask extension) renders content dynamically to templates via passed in kwargs:
-    return render_template('index.html', title='Home', user=current_user, posts=current_user.posts)
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
+    posts = current_user.followed_posts().all()
+    return render_template('index.html', title='Home Page', form=form,
+                           posts=posts)
 
 @app.route('/user/<username>')
 @login_required
@@ -101,6 +109,7 @@ def login():
         # determine if URL is relative vs absolute, and parse with Werkzeug.url_parse() to check if netloc component is set:
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
+        flash('Welcome back, fellow Shred-head!')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 

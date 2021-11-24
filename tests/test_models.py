@@ -6,15 +6,16 @@ from app.models import User, Post
 class TestModels:
     @classmethod
     def set_up(cls):
+        app.config['TESTING'] = True
         # change app config to use an in-memory version of db:
         app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///'
         db.create_all()
-        users = User.query.all()
-        posts = Post.query.all()
-        if len(users) > 0 or len(posts) > 0:
-            for u in users:
+        cls.users = User.query.all()
+        cls.posts = Post.query.all()
+        if len(cls.users) > 0 or len(cls.posts) > 0:
+            for u in cls.users:
                 db.session.delete(u)
-            for p in posts:
+            for p in cls.posts:
                 db.session.delete(p)
             db.session.commit()
         assert len(User.query.all()) == 0

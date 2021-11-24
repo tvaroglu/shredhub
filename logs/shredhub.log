@@ -1,52 +1,23 @@
-2021-11-20 18:31:05,362 ERROR: Exception on /follow/TaylorV [POST] [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 51, in follow
-    import pdb; pdb.set_trace()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 51, in follow
-    import pdb; pdb.set_trace()
-  File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/bdb.py", line 88, in trace_dispatch
-    return self.dispatch_line(frame)
-  File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/bdb.py", line 113, in dispatch_line
-    if self.quitting: raise BdbQuit
-bdb.BdbQuit
-2021-11-20 18:31:07,880 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:38:17,774 ERROR: Exception on /follow/TaylorV [POST] [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py:1457]
-Traceback (most recent call last):
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 52, in follow
-    user = User.query.filter_by(username=username).first()
-  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 52, in follow
-    user = User.query.filter_by(username=username).first()
-  File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/bdb.py", line 88, in trace_dispatch
-    return self.dispatch_line(frame)
-  File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/bdb.py", line 113, in dispatch_line
-    if self.quitting: raise BdbQuit
-bdb.BdbQuit
-2021-11-20 18:38:25,827 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:40:14,895 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:40:50,565 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:41:13,455 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:49:00,174 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:49:10,109 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:49:13,935 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:49:50,940 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
-2021-11-20 18:54:58,869 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:19:59,595 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:22:19,766 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:23:28,930 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:25:35,824 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:28:16,179 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:29:56,174 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:30:04,112 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:30:40,440 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:31:11,967 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:36:18,163 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:37:08,534 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:37:57,772 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:38:04,461 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:39:56,756 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:40:29,104 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:41:36,072 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:42:39,021 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:43:21,037 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:51:24,804 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:57:19,882 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:58:10,455 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:58:29,008 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-24 11:59:17,495 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
