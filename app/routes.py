@@ -28,6 +28,12 @@ def index():
     return render_template('index.html', title='Home Page', form=form,
                            posts=posts)
 
+@app.route('/explore')
+@login_required
+def explore():
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return render_template('index.html', title='Explore', posts=posts)
+
 @app.route('/user/<username>')
 @login_required
 def user(username):
