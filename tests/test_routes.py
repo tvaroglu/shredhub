@@ -47,6 +47,14 @@ class TestRoutes:
         assert 'Register' in self.response
         TestRoutes.tear_down()
 
+    def test_404(self):
+        self.client = TestRoutes.set_up()
+        self.request = self.client.get('/foo_bar')
+        assert self.request.status_code == 404
+        self.response = str(self.request.data)
+        assert 'Page Not Found.. Perhaps Your Trail Map is Upside Down?' in self.response
+        TestRoutes.tear_down()
+
     def test_index(self):
         self.client = TestRoutes.set_up()
         assert str(type(self.client)) == "<class 'flask.testing.FlaskClient'>"

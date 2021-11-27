@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import User
+from app.models import User, Post
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm
 from datetime import datetime
 from flask import render_template, request, flash, redirect, url_for
