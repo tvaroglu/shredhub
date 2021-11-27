@@ -47,3 +47,21 @@ AttributeError: type object 'Post' has no attribute 'timestamp'
 2021-11-27 11:55:48,367 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
 2021-11-27 16:08:22,822 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
 2021-11-27 16:10:45,118 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-27 16:19:40,660 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-27 16:20:13,883 ERROR: Exception on /explore [GET] [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 42, in explore
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+AttributeError: type object 'Post' has no attribute 'timestamp'
+2021-11-27 16:20:24,440 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-27 16:21:03,829 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
