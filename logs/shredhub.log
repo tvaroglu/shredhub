@@ -45,3 +45,5 @@ Traceback (most recent call last):
 AttributeError: type object 'Post' has no attribute 'timestamp'
 2021-11-27 11:54:14,744 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
 2021-11-27 11:55:48,367 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-27 16:08:22,822 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-11-27 16:10:45,118 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
