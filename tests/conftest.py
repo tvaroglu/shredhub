@@ -1,5 +1,15 @@
 import pytest
+from app import app, db
 from app.models import User
+
+@pytest.fixture(scope='function')
+def test_app():
+    app.config['TESTING'] = True
+    # change app config to use an in-memory version of db:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///'
+    with app.app_context():
+        db.create_all()
+        yield app
 
 @pytest.fixture(scope='function')
 def dummy_user():
