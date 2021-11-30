@@ -26,18 +26,9 @@ class TestModels:
         db.session.remove()
         db.drop_all()
 
-    @classmethod
-    def dummy_user(cls):
-        cls.user = User(
-            username='Admin',
-            email='admin@example.com',
-            about_me='What up!'
-        )
-        return cls.user
-
-    def test_user_attributes(self):
+    def test_user_attributes(self, dummy_user):
         TestModels.set_up()
-        self.user = TestModels.dummy_user()
+        self.user = dummy_user
         db.session.add(self.user)
         db.session.commit()
         assert len(User.query.all()) == 1
@@ -45,28 +36,28 @@ class TestModels:
         assert self.user.username == 'Admin'
         assert self.user.email == 'admin@example.com'
         assert self.user.about_me == 'What up!'
+        assert isinstance(self.user.password_hash, str)
         assert isinstance(self.user.created_at, datetime)
         assert isinstance(self.user.updated_at, datetime)
         assert isinstance(self.user.last_seen, datetime)
         TestModels.tear_down()
 
-    def test__repr__(self):
+    def test__repr__(self, dummy_user):
         TestModels.set_up()
-        self.user = TestModels.dummy_user()
+        self.user = dummy_user
         assert self.user.__repr__() == f'<User: {self.user.username}>'
         TestModels.tear_down()
 
-    def test_password_hashing(self):
+    def test_password_hashing(self, dummy_user):
         TestModels.set_up()
-        self.user = TestModels.dummy_user()
-        self.user.set_password('foo')
-        assert self.user.check_password('foo') == True
-        assert self.user.check_password('bar') == False
+        self.user = dummy_user
+        assert self.user.check_password('guest') == True
+        assert self.user.check_password('foo') == False
         TestModels.tear_down()
 
-    def test_avatar(self):
+    def test_avatar(self, dummy_user):
         TestModels.set_up()
-        self.user = TestModels.dummy_user()
+        self.user = dummy_user
         split = self.user.avatar(128).split('/')
         assert split[0] == 'https:'
         assert split[2] == 'www.gravatar.com'
@@ -74,9 +65,9 @@ class TestModels:
         assert '?d=identicon&s=128' in split[-1]
         TestModels.tear_down()
 
-    def test_follow(self):
+    def test_follow(self, dummy_user):
         TestModels.set_up()
-        self.user_1 = TestModels.dummy_user()
+        self.user_1 = dummy_user
         self.user_2 = User(username='guest', email='guest@example.com')
         db.session.add(self.user_1)
         db.session.add(self.user_2)
@@ -100,9 +91,9 @@ class TestModels:
         assert self.user_2.followers.count() == 0
         TestModels.tear_down()
 
-    def test_post_attributes(self):
+    def test_post_attributes(self, dummy_user):
         TestModels.set_up()
-        self.user = TestModels.dummy_user()
+        self.user = dummy_user
         now = datetime.utcnow()
         self.post = Post(body='test post', author=self.user, created_at=now)
         db.session.add(self.user)
@@ -115,10 +106,10 @@ class TestModels:
         assert isinstance(self.post.created_at, datetime)
         TestModels.tear_down()
 
-    def test_followed_posts(self):
+    def test_followed_posts(self, dummy_user):
         TestModels.set_up()
         # create four users:
-        self.user_1 = TestModels.dummy_user()
+        self.user_1 = dummy_user
         self.user_2 = User(username='guest', email='guest@example.com')
         self.user_3 = User(username='mary', email='mary@example.com')
         self.user_4 = User(username='david', email='david@example.com')

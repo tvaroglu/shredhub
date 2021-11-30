@@ -1,6 +1,17 @@
 import pytest
-# TODO: add vcrpy package to requirements when external API calls are integrated
+from app.models import User
 
+@pytest.fixture(scope='function')
+def dummy_user():
+    user = User(
+        username='Admin',
+        email='admin@example.com',
+        about_me='What up!'
+    )
+    user.set_password('guest')
+    return user
+
+# TODO: add vcrpy package to requirements when external API calls are integrated
 # @pytest.fixture(scope='module')
 # def vcr_config():
 #     return {
