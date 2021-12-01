@@ -6,8 +6,8 @@
             <td><img style="border-radius:40%; padding-right:10px;" src="{{ user.avatar(128) }}"></td>
             <td>
               <h1>Shredder: {{ user.username }}</h1>
-              {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-              {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+              {% if user.about_me %}<p>About Me: {{ user.about_me }}</p>{% endif %}
+              {% if user.last_seen %}<p>Last Seen On: {{ user.last_seen }}</p>{% endif %}
               <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
             </td>
         </tr>
@@ -35,4 +35,12 @@
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
+    {% if prev_url %}
+      <br>
+      <a href="{{ prev_url }}">Newer Posts</a>
+    {% endif %}
+    {% if next_url %}
+      <br>
+      <a href="{{ next_url }}">Older Posts</a>
+    {% endif %}
 {% endblock %}
