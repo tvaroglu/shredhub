@@ -62,7 +62,7 @@ class TestModels:
     def test_follow(self, test_app, dummy_user):
         TestModels.set_up(test_app)
         self.user_1 = dummy_user
-        self.user_2 = User(username='guest', email='guest@example.com')
+        self.user_2 = User(username='Guest', email='guest@example.com')
         db.session.add(self.user_1)
         db.session.add(self.user_2)
         db.session.commit()
@@ -76,7 +76,6 @@ class TestModels:
         assert self.user_2.is_following(self.user_1) == False
         assert self.user_2.followers.count() == 1
         assert self.user_2.followers.first().username == self.user_1.username
-
         self.user_1.unfollow(self.user_2)
         db.session.commit()
         assert self.user_1.is_following(self.user_2) == False
@@ -103,27 +102,27 @@ class TestModels:
         TestModels.set_up(test_app)
         # create four users:
         self.user_1 = dummy_user
-        self.user_2 = User(username='guest', email='guest@example.com')
-        self.user_3 = User(username='mary', email='mary@example.com')
-        self.user_4 = User(username='david', email='david@example.com')
+        self.user_2 = User(username='Guest', email='guest@example.com')
+        self.user_3 = User(username='Mary', email='mary@example.com')
+        self.user_4 = User(username='David', email='david@example.com')
         db.session.add_all([self.user_1, self.user_2, self.user_3, self.user_4])
         # create four posts:
         now = datetime.utcnow()
         self.post_1 = Post(body='post from Admin', author=self.user_1,
                   created_at=now + timedelta(seconds=1))
-        self.post_2 = Post(body='post from guest', author=self.user_2,
+        self.post_2 = Post(body='post from Guest', author=self.user_2,
                   created_at=now + timedelta(seconds=4))
-        self.post_3 = Post(body='post from mary', author=self.user_3,
+        self.post_3 = Post(body='post from Mary', author=self.user_3,
                   created_at=now + timedelta(seconds=3))
-        self.post_4 = Post(body='post from david', author=self.user_4,
+        self.post_4 = Post(body='post from David', author=self.user_4,
                   created_at=now + timedelta(seconds=2))
         db.session.add_all([self.post_1, self.post_2, self.post_3, self.post_4])
         db.session.commit()
         # set up the followers:
-        self.user_1.follow(self.user_2)  # Admin follows guest
-        self.user_1.follow(self.user_4)  # Admin follows david
-        self.user_2.follow(self.user_3)  # guest follows mary
-        self.user_3.follow(self.user_4)  # mary follows david
+        self.user_1.follow(self.user_2)  # Admin follows Guest
+        self.user_1.follow(self.user_4)  # Admin follows David
+        self.user_2.follow(self.user_3)  # Guest follows Mary
+        self.user_3.follow(self.user_4)  # Mary follows David
         db.session.commit()
         # check the followed posts for each user:
         self.followed_posts_1 = self.user_1.followed_posts().all()

@@ -2,8 +2,8 @@ import pytest
 import json
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
-from app import app, db
-from app.models import User, Post
+from app import db
+import flask
 from flask_login import login_user, logout_user, current_user
 
 class TestRoutes:
@@ -40,8 +40,6 @@ class TestRoutes:
         TestRoutes.tear_down(test_app)
 
     def test_login_user(self, test_app, dummy_user):
-        self.generator = TestRoutes.set_up(test_app)
-        self.client = next(self.generator)
         self.user = dummy_user
         login_user(self.user, remember=True)
         assert current_user.username == self.user.username
@@ -49,16 +47,7 @@ class TestRoutes:
         TestRoutes.tear_down(test_app)
 
     def test_index(self, test_app, dummy_user):
-        self.generator = TestRoutes.set_up(test_app)
-        self.client = next(self.generator)
-        self.user = dummy_user
-        login_user(self.user, remember=True)
-        @app.login_manager.request_loader
-        def load_user_from_request(request):
-            return User.query.first()
-        self.request = self.client.get('/')
-        self.response = str(self.request.data)
-        # import pdb; pdb.set_trace()
-        # assert self.request.status_code == 200
-        # assert self.request.location == '/'
+        with test_app.test_request_context('/index'):
+            login_user(dummy_user, remember=True)
+            assert flask.request.path == '/index'
         TestRoutes.tear_down(test_app)
