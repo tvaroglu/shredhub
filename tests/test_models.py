@@ -1,17 +1,15 @@
 import pytest
 from datetime import datetime, timedelta
 from app import db
-from app.models import User, Post
+from app.models import User, Post, load_user
 
 class TestModels:
     @classmethod
     def set_up(cls, test_app):
-        cls.users = User.query.all()
-        cls.posts = Post.query.all()
-        if len(cls.users) > 0 or len(cls.posts) > 0:
-            for u in cls.users:
+        if len(User.query.all()) > 0 or len(Post.query.all()) > 0:
+            for u in User.query.all():
                 db.session.delete(u)
-            for p in cls.posts:
+            for p in Post.query.all():
                 db.session.delete(p)
             db.session.commit()
 
@@ -40,6 +38,18 @@ class TestModels:
         TestModels.set_up(test_app)
         self.user = dummy_user
         assert self.user.__repr__() == f'<User: {self.user.username}>'
+        TestModels.tear_down(test_app)
+
+    def test_load_user(self, test_app, dummy_user):
+        TestModels.set_up(test_app)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        self.user_loader = load_user(self.user.id)
+        assert self.user_loader.id == self.user.id
+        assert self.user_loader.username == self.user.username
+        assert self.user_loader.about_me == self.user.about_me
+        assert self.user_loader.password_hash == self.user.password_hash
         TestModels.tear_down(test_app)
 
     def test_password_hashing(self, test_app, dummy_user):
@@ -88,6 +98,7 @@ class TestModels:
         self.user = dummy_user
         now = datetime.utcnow()
         self.post = Post(body='test post', author=self.user, created_at=now)
+        assert self.post.__repr__() == f'<Post: {self.post.body}>'
         db.session.add(self.user)
         db.session.add(self.post)
         db.session.commit()
