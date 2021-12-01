@@ -30,6 +30,19 @@ class TestRoutes:
         assert 'Register' in self.response
         TestRoutes.tear_down(test_app)
 
+    def test_login(self, test_app):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.request = self.client.get('/login')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Login' in self.response
+        assert 'Email' in self.response
+        assert 'Password' in self.response
+        assert 'Remember Me' in self.response
+        assert 'Sign In' in self.response
+        TestRoutes.tear_down(test_app)
+
     def test_404(self, test_app):
         self.generator = TestRoutes.set_up(test_app)
         self.client = next(self.generator)
@@ -39,11 +52,14 @@ class TestRoutes:
         assert 'Page Not Found.. Perhaps Your Trail Map is Upside Down?' in self.response
         TestRoutes.tear_down(test_app)
 
-    def test_login_user(self, test_app, dummy_user):
+    def test_current_user(self, test_app, dummy_user):
         self.user = dummy_user
         login_user(self.user, remember=True)
         assert current_user.username == self.user.username
         assert current_user.email == self.user.email
+        assert current_user.is_authenticated == True
+        logout_user()
+        assert current_user.is_authenticated == False
         TestRoutes.tear_down(test_app)
 
     def test_index(self, test_app, dummy_user):
