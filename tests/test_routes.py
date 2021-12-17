@@ -62,8 +62,18 @@ class TestRoutes:
         assert current_user.is_authenticated == False
         TestRoutes.tear_down(test_app)
 
-    def test_index(self, test_app, dummy_user):
+    def test_index_path(self, test_app, dummy_user):
         with test_app.test_request_context('/index'):
             login_user(dummy_user, remember=True)
             assert flask.request.path == '/index'
+        TestRoutes.tear_down(test_app)
+
+    def test_index(self, test_app, dummy_user):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.request = self.client.get('/index')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Where&#39;s the powder at today?' in self.response
+        assert 'Submit' in self.response
         TestRoutes.tear_down(test_app)
