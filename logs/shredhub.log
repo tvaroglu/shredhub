@@ -43,3 +43,28 @@
 2021-11-30 20:25:12,836 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
 2021-11-30 20:25:22,200 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
 2021-11-30 20:25:35,758 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-12-17 14:16:11,167 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:32]
+2021-12-17 14:18:18,912 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:34]
+2021-12-17 14:23:47,857 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:34]
+2021-12-17 14:27:51,930 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:34]
+2021-12-17 14:28:52,160 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:34]
+2021-12-17 14:28:55,029 ERROR: Exception on /register [GET] [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/venv/lib/python3.9/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/routes.py", line 113, in register
+    foo
+NameError: name 'foo' is not defined
+2021-12-17 14:31:58,403 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-17 14:32:00,252 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-17 14:32:03,463 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-17 14:33:52,629 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-17 14:34:37,001 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-17 14:34:47,717 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-17 14:37:31,829 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
