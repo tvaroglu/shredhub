@@ -6,6 +6,7 @@ from flask_login import login_user
 @pytest.fixture(scope='function')
 def test_app():
     app.config['TESTING'] = True
+    # disable @login_required decorator for unittesting:
     app.config['LOGIN_DISABLED'] = True
     # change app config to use an in-memory version of db:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///'
