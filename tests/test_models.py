@@ -145,3 +145,11 @@ class TestModels:
         assert self.followed_posts_3 == [self.post_3, self.post_4]
         assert self.followed_posts_4 == [self.post_4]
         TestModels.tear_down(test_app)
+
+    def test_password_reset_token(self, test_app, dummy_user):
+        TestModels.set_up(test_app)
+        self.user = dummy_user
+        self.user.id = 1
+        self.token = self.user.get_password_reset_token()
+        assert isinstance(self.token, str)
+        assert User.verify_password_reset_token(self.token) == None
