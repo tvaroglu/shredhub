@@ -149,7 +149,9 @@ class TestModels:
     def test_password_reset_token(self, test_app, dummy_user):
         TestModels.set_up(test_app)
         self.user = dummy_user
-        self.user.id = 1
+        assert User.verify_password_reset_token('foo') == None
+        db.session.add(self.user)
+        db.session.commit()
         self.token = self.user.get_password_reset_token()
         assert isinstance(self.token, str)
-        assert User.verify_password_reset_token(self.token) == None
+        assert User.verify_password_reset_token(self.token) == self.user

@@ -5,7 +5,6 @@ import jwt
 from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-# from app import app
 
 followers = db.Table(
     'followers',
