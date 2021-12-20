@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="card text-dark bg-light mb-3 card-custom" style="max-width:22rem;">
     <h1>Login:</h1>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
@@ -28,4 +29,5 @@
     <br>
     <p>Forgot Your Password? Click <a href="{{ url_for('reset_password_request') }}">here</a> to reset it.</p>
     <p>New User? Register <a href="{{ url_for('register') }}">here</a>!</p>
+  </div>
 {% endblock %}
