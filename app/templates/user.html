@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="card text-dark bg-light mb-3 card-custom" style="max-width:30rem;">
     <table>
         <tr valign="center">
             <td><img style="border-radius:40%; padding-right:10px;" src="{{ user.avatar(128) }}"></td>
@@ -9,26 +10,20 @@
               {% if user.about_me %}<p>About Me: {{ user.about_me }}</p>{% endif %}
               {% if user.last_seen %}<p>Last Seen On: {{ user.last_seen }}</p>{% endif %}
               <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-            </td>
-        </tr>
-        <tr valign="center">
           {% if user == current_user %}
-            <td style="padding-left:10px;"><a href="{{ url_for('edit_profile') }}">Edit your profile</a></td>
+            <a href="{{ url_for('edit_profile') }}" class="btn btn-light btn-outline-dark" style="font-size:0.955em;">Edit Profile</a>
           {% elif not current_user.is_following(user) %}
-            <td style="padding-left:10px;">
-                <form action="{{ url_for('follow', username=user.username, action='follow') }}" method="post">
-                    {{ form.hidden_tag() }}
-                    {{ form.submit(value='Follow') }}
-                </form>
-            </td>
+            <form action="{{ url_for('follow', username=user.username, action='follow') }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='Follow') }}
+            </form>
           {% else %}
-            <td style="padding-left:10px;">
-                <form action="{{ url_for('follow', username=user.username, action='unfollow') }}" method="post">
-                    {{ form.hidden_tag() }}
-                    {{ form.submit(value='Unfollow') }}
-                </form>
-            </td>
+            <form action="{{ url_for('follow', username=user.username, action='unfollow') }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='Unfollow') }}
+            </form>
           {% endif %}
+          </td>
         </tr>
     </table>
     <hr>
@@ -43,4 +38,5 @@
       <br>
       <a href="{{ next_url }}">Older Posts</a>
     {% endif %}
+  </div>
 {% endblock %}
