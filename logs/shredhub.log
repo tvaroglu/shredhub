@@ -42,3 +42,7 @@ socket.gaierror: [Errno 8] nodename nor servname provided, or not known
 2021-12-19 17:25:06,130 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
 2021-12-19 17:25:15,606 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
 2021-12-19 17:25:20,477 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-19 17:30:51,129 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-19 17:43:25,015 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-19 17:43:30,941 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
+2021-12-19 17:43:47,826 INFO: Shredhub startup [in /Users/taylorvaroglu/Desktop/DesktopFiles/mod4/practice/shredhub/app/__init__.py:33]
