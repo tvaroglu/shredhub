@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="card text-dark bg-light mb-3 card-custom" style="max-width:30rem;">
+  <div class="card text-dark bg-light mb-3 card-custom">
     <table>
         <tr valign="center">
-            <td><img style="border-radius:40%; padding-right:10px;" src="{{ user.avatar(128) }}"></td>
+            <td><img class="user-avatar" src="{{ user.avatar(128) }}"></td>
             <td>
               <h1>Shredder: {{ user.username }}</h1>
               {% if user.about_me %}<p>About Me: {{ user.about_me }}</p>{% endif %}
