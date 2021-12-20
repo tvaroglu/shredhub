@@ -1,6 +1,8 @@
     <table>
-        <tr valign="top">
-            <td><img style="border-radius:40%; padding-right:10px;" src="{{ post.author.avatar(36) }}"></td>
+        <tr valign="center">
+            <td width="2em;">
+              <img style="border-radius:40%; padding-right:10px;" src="{{ post.author.avatar(36) }}">
+            </td>
             <td>
                 <a href="{{ url_for('user', username=post.author.username) }}">
                     {{ post.author.username }}
@@ -9,3 +11,4 @@
             </td>
         </tr>
     </table>
+    <br>

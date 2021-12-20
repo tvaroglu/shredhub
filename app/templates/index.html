@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="card text-dark bg-light mb-3 card-custom" style="max-width:25rem;">
     <h1>Hi, {{ current_user.username }}!</h1>
     {% if form %}
       <form action="" method="post">
@@ -17,6 +18,7 @@
           <p>{{ form.submit() }}</p>
       </form>
     {% endif %}
+    <h4>Your posts, and all posts <br>from fellow shredders:</h4>
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
@@ -28,4 +30,5 @@
       <br>
       <a href="{{ next_url }}">Older Posts</a>
     {% endif %}
+  </div>
 {% endblock %}
