@@ -1,2 +1,1 @@
-release: ./release-tasks.sh
-web: gunicorn app:app
+web: flask db upgrade; gunicorn shredhub:app
