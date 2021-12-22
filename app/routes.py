@@ -75,12 +75,12 @@ def edit_profile():
     if current_user.is_authenticated:
         form = EditProfileForm(current_user.username)
         if form.validate_on_submit():
-            current_user.username = form.username.data
+            current_user.username = User.clean_username(form.username.data)
             current_user.about_me = form.about_me.data
             current_user.updated_at = datetime.utcnow()
             db.session.commit()
             flash('Your changes have been saved.')
-            return redirect(url_for('user', username=form.username.data))
+            return redirect(url_for('user', username=User.clean_username(form.username.data)))
         elif request.method == 'GET':
             form.username.data = current_user.username
             form.about_me.data = current_user.about_me
@@ -124,7 +124,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data.lower())
+        user = User(username=User.clean_username(form.username.data), email=form.email.data.lower())
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()

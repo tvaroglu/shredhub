@@ -39,8 +39,10 @@ class EditProfileForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != self.original_username:
-            user = User.query.filter_by(username=self.username.data).first()
-            if user is not None:
+            user = User.query.filter_by(username=User.clean_username(self.username.data)).first()
+            if '/' in self.username.data or "\\" in self.username.data:
+                raise ValidationError('Please do not use forbidden characters in your username.')
+            elif user is not None:
                 raise ValidationError('Please use a different username.')
 
 class PostForm(FlaskForm):
