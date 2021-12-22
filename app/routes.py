@@ -43,14 +43,16 @@ def index():
 @login_required
 def explore():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.created_at.desc()).paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('explore', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('explore', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('main/index.html', title='Explore', posts=posts.items,
+    if current_user.is_authenticated:
+        posts = Post.query.order_by(Post.created_at.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False)
+        next_url = url_for('explore', page=posts.next_num) \
+            if posts.has_next else None
+        prev_url = url_for('explore', page=posts.prev_num) \
+            if posts.has_prev else None
+        return render_template('main/index.html', title='Explore', posts=posts.items,
                           next_url=next_url, prev_url=prev_url)
+    return render_template('main/index.html', title='Explore')
 
 @app.route('/user/<username>')
 @login_required
@@ -70,17 +72,21 @@ def user(username):
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm(current_user.username)
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
-        current_user.updated_at = datetime.utcnow()
-        db.session.commit()
-        flash('Your changes have been saved.')
-        return redirect(url_for('user', username=form.username.data))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
+    if current_user.is_authenticated:
+        form = EditProfileForm(current_user.username)
+        if form.validate_on_submit():
+            current_user.username = form.username.data
+            current_user.about_me = form.about_me.data
+            current_user.updated_at = datetime.utcnow()
+            db.session.commit()
+            flash('Your changes have been saved.')
+            return redirect(url_for('user', username=form.username.data))
+        elif request.method == 'GET':
+            form.username.data = current_user.username
+            form.about_me.data = current_user.about_me
+        return render_template('main/edit_profile.html', title='Edit Profile',
+                               form=form)
+    form = EditProfileForm('')
     return render_template('main/edit_profile.html', title='Edit Profile',
                            form=form)
 
