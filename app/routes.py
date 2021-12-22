@@ -33,11 +33,12 @@ def index():
             if posts.has_next else None
         prev_url = url_for('index', page=posts.prev_num) \
             if posts.has_prev else None
-        return render_template('index.html', title='Home', form=form,
+        return render_template('main/index.html', title='Home', form=form,
                                posts=posts.items, next_url=next_url,
                                prev_url=prev_url)
-    return render_template('index.html', title='Home', form=form)
+    return render_template('main/index.html', title='Home', form=form)
 
+# TODO: work custom conditional into template rendering to differentiate header in template
 @app.route('/explore')
 @login_required
 def explore():
@@ -48,7 +49,7 @@ def explore():
         if posts.has_next else None
     prev_url = url_for('explore', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('index.html', title='Explore', posts=posts.items,
+    return render_template('main/index.html', title='Explore', posts=posts.items,
                           next_url=next_url, prev_url=prev_url)
 
 @app.route('/user/<username>')
@@ -63,7 +64,7 @@ def user(username):
     prev_url = url_for('user', username=user.username, page=posts.prev_num) \
         if posts.has_prev else None
     form = EmptyForm()
-    return render_template('user.html', user=user, posts=posts.items,
+    return render_template('main/user.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url, form=form)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -80,7 +81,7 @@ def edit_profile():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title='Edit Profile',
+    return render_template('main/edit_profile.html', title='Edit Profile',
                            form=form)
 
 @app.route('/follow/<username>', methods=['POST'])
@@ -123,7 +124,7 @@ def register():
         db.session.commit()
         flash('Thanks for joining the party, fellow Shred-head!')
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('auth/register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -142,12 +143,12 @@ def login():
             next_page = url_for('index')
         flash('Welcome back, fellow Shred-head!')
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('auth/login.html', title='Sign In', form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
@@ -160,7 +161,7 @@ def reset_password_request():
             send_password_reset_email(user)
         flash('Check your email for instructions to reset your password')
         return redirect(url_for('login'))
-    return render_template('reset_password_request.html',
+    return render_template('auth/reset_password_request.html',
                            title='Reset Password', form=form)
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -176,4 +177,4 @@ def reset_password(token):
         db.session.commit()
         flash('Your password has been reset.')
         return redirect(url_for('login'))
-    return render_template('reset_password.html', form=form)
+    return render_template('auth/reset_password.html', form=form)
