@@ -176,5 +176,5 @@ class TestModels:
                   created_at=now)
         db.session.add_all([self.post_1, self.post_2, self.post_3, self.post_4])
         db.session.commit()
-        assert Post.search('post from admin') == [self.post_3, self.post_2, self.post_1]
+        assert Post.search('post from admin').all() == [self.post_3, self.post_2, self.post_1]
         TestModels.tear_down(test_app)

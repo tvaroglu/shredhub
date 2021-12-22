@@ -1,4 +1,5 @@
 from app.models import User
+from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
@@ -49,6 +50,16 @@ class PostForm(FlaskForm):
     post = TextAreaField("Where's the powder at today?", validators=[
         DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Submit')
+
+class SearchForm(FlaskForm):
+    q = StringField('Search', validators=[DataRequired()])
+
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super(SearchForm, self).__init__(*args, **kwargs)
 
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])

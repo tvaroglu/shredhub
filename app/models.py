@@ -105,4 +105,4 @@ class Post(db.Model):
     def search(criteria):
         return Post.query.filter(
             Post.body.ilike(f'%{criteria}%')).order_by(
-            Post.created_at.desc()).all()
+            Post.created_at.desc())

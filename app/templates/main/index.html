@@ -2,23 +2,28 @@
 
 {% block content %}
   <div class="card text-dark bg-light mb-3 card-custom">
-    <h1>Hi, {{ current_user.username }}!</h1>
     {% if form %}
-      <form action="" method="post">
-          {{ form.hidden_tag() }}
-          <p>
-              {{ form.post.label }}
-              <br>
-              {{ form.post(cols=32, rows=4) }}
-              <br>
-              {% for error in form.post.errors %}
-                <span style="color: red;">{{ error }}</span>
-              {% endfor %}
-          </p>
-          <p>{{ form.submit() }}</p>
-      </form>
+      <h1>Hi, {{ current_user.username }}!</h1>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.post.label }}
+                <br>
+                {{ form.post(cols=32, rows=4) }}
+                <br>
+                {% for error in form.post.errors %}
+                  <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+        <br>
+      <h4>Your posts, and all posts from<br>the shredders you follow:</h4>
+    {% elif title == 'Search' %}
+      <h1>Search Results:</h1>
+    {% else %}
+      <h4>Your posts, and all posts<br>from fellow shredders:</h4>
     {% endif %}
-    <h4>Your posts, and all posts <br>from fellow shredders:</h4>
     {% for post in posts %}
         {% include 'main/_post.html' %}
     {% endfor %}

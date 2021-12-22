@@ -80,6 +80,13 @@
                   </li>
                 {% endif %}
             </ul>
+            {% if g.search_form %}
+              <form class="d-flex" method="get" action="{{ url_for('search') }}">
+                  {{ g.search_form.q(size=20, class='form-control me-2',
+                            placeholder=g.search_form.q.label.text) }}
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            {% endif %}
           </div>
         </div>
       </nav>
