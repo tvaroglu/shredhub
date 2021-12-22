@@ -4,10 +4,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config(object):
-    # class variable defined for CSRF protection within Flask-WTF (form) extension package
-    # TODO: update 2nd expression during deployment process
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace(
+        'postgres://', 'postgresql://')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 20
     MAIL_SERVER = 'smtp.sendgrid.net'
