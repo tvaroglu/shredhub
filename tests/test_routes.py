@@ -64,10 +64,10 @@ class TestRoutes:
         assert current_user.is_authenticated == False
         TestRoutes.tear_down(test_app)
 
-    def test_index_path(self, test_app, dummy_user):
-        with test_app.test_request_context('/index'):
+    def test_root_path(self, test_app, dummy_user):
+        with test_app.test_request_context('/'):
             login_user(dummy_user, remember=True)
-            assert flask.request.path == '/index'
+            assert flask.request.path == '/'
         TestRoutes.tear_down(test_app)
 
     def test_index(self, test_app):
