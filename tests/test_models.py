@@ -155,3 +155,4 @@ class TestModels:
         self.token = self.user.get_password_reset_token()
         assert isinstance(self.token, str)
         assert User.verify_password_reset_token(self.token) == self.user
+        TestModels.tear_down(test_app)

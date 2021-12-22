@@ -64,10 +64,10 @@ class TestRoutes:
         assert current_user.is_authenticated == False
         TestRoutes.tear_down(test_app)
 
-    def test_index_path(self, test_app, dummy_user):
-        with test_app.test_request_context('/index'):
+    def test_root_path(self, test_app, dummy_user):
+        with test_app.test_request_context('/'):
             login_user(dummy_user, remember=True)
-            assert flask.request.path == '/index'
+            assert flask.request.path == '/'
         TestRoutes.tear_down(test_app)
 
     def test_index(self, test_app):
@@ -80,12 +80,70 @@ class TestRoutes:
         assert 'Submit' in self.response
         TestRoutes.tear_down(test_app)
 
-    def test_password_reset(self, test_app):
+    def test_explore(self, test_app):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.request = self.client.get('/explore')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Your posts, and all posts' in self.response
+        assert 'from fellow shredders:' in self.response
+        TestRoutes.tear_down(test_app)
+
+    def test_password_reset_request(self, test_app):
         self.generator = TestRoutes.set_up(test_app)
         self.client = next(self.generator)
         self.request = self.client.get('/reset_password_request')
         assert self.request.status_code == 200
         self.response = str(self.request.data)
         assert 'Reset Password' in self.response
+        assert 'Email' in self.response
         assert 'Request Password Reset' in self.response
+        TestRoutes.tear_down(test_app)
+
+    def test_password_reset(self, test_app, dummy_user):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        self.token = self.user.get_password_reset_token()
+        self.request = self.client.get(f'/reset_password/{self.token}')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Reset Your Password' in self.response
+        assert 'Password' in self.response
+        assert 'Confirm Password' in self.response
+        assert 'Reset Password' in self.response
+        TestRoutes.tear_down(test_app)
+
+    def test_user_profile(self, test_app, dummy_user):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        self.request = self.client.get(f'/user/{self.user.username}')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert f'Shredder: {self.user.username}' in self.response
+        assert 'About Me:' in self.response
+        assert self.user.about_me in self.response
+        assert f'{self.user.followers.count()} followers,' in self.response
+        assert f'{self.user.followed.count()} following.' in self.response
+        TestRoutes.tear_down(test_app)
+
+    def test_edit_profile(self, test_app, dummy_user):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        self.request = self.client.get('/edit_profile')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Edit Profile:' in self.response
+        assert 'Username' in self.response
+        assert 'About Me' in self.response
+        assert 'Submit' in self.response
         TestRoutes.tear_down(test_app)

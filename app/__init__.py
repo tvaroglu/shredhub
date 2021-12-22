@@ -22,7 +22,7 @@ moment = Moment(app)
 # imports at END of file to prevent circular imports:
 from app import routes, models, errors
 
-if not app.debug:
+if not app.debug and not app.testing:
     if not os.path.exists('logs'):
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/shredhub.log', maxBytes=10240,
