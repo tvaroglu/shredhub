@@ -156,3 +156,25 @@ class TestModels:
         assert isinstance(self.token, str)
         assert User.verify_password_reset_token(self.token) == self.user
         TestModels.tear_down(test_app)
+
+    def test_clean_username(self, test_app):
+        TestModels.set_up(test_app)
+        self.bad_username = 'Admin/\\'
+        assert User.clean_username(self.bad_username) == 'Admin'
+
+    def test_post_search(self, test_app, dummy_user):
+        TestModels.set_up(test_app)
+        self.user = dummy_user
+        now = datetime.utcnow()
+        self.post_1 = Post(body='post from admin', author=self.user,
+                  created_at=now + timedelta(seconds=1))
+        self.post_2 = Post(body='another post from Admin', author=self.user,
+                  created_at=now + timedelta(seconds=2))
+        self.post_3 = Post(body='another POST FROM ADMIN', author=self.user,
+                  created_at=now + timedelta(seconds=3))
+        self.post_4 = Post(body='foo bar baz', author=self.user,
+                  created_at=now)
+        db.session.add_all([self.post_1, self.post_2, self.post_3, self.post_4])
+        db.session.commit()
+        assert Post.search('post from admin') == [self.post_3, self.post_2, self.post_1]
+        TestModels.tear_down(test_app)

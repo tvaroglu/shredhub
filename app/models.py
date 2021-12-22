@@ -78,7 +78,13 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
-        # return User.query.get(int(id))
+
+    @staticmethod
+    def clean_username(username):
+        forbidden_characters = "/\\"
+        for char in forbidden_characters:
+            username = username.replace(char, '')
+        return username
 
 
 @login.user_loader
@@ -94,3 +100,9 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'<Post: {self.body}>'
+
+    @staticmethod
+    def search(criteria):
+        return Post.query.filter(
+            Post.body.ilike(f'%{criteria}%')).order_by(
+            Post.created_at.desc()).all()
