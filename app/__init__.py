@@ -38,9 +38,9 @@ if not app.debug and not app.testing:
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
     if app.config['LOG_TO_STDOUT']:
-            stream_handler = logging.StreamHandler()
-            stream_handler.setLevel(logging.INFO)
-            app.logger.addHandler(stream_handler)
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(logging.INFO)
+        app.logger.addHandler(stream_handler)
     else:
         if not os.path.exists('logs'):
             os.mkdir('logs')
