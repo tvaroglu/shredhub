@@ -1,4 +1,5 @@
 from app.models import User
+from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
@@ -19,7 +20,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
+        user = User.query.filter_by(username=User.clean_username(username.data)).first()
         if user is not None:
             raise ValidationError('Please use a different username.')
 
@@ -39,14 +40,26 @@ class EditProfileForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != self.original_username:
-            user = User.query.filter_by(username=self.username.data).first()
-            if user is not None:
+            user = User.query.filter_by(username=User.clean_username(self.username.data)).first()
+            if '/' in self.username.data or "\\" in self.username.data:
+                raise ValidationError('Please do not use forbidden characters in your username.')
+            elif user is not None:
                 raise ValidationError('Please use a different username.')
 
 class PostForm(FlaskForm):
     post = TextAreaField("Where's the powder at today?", validators=[
         DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Submit')
+
+class SearchForm(FlaskForm):
+    q = StringField('Search', validators=[DataRequired()])
+
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super(SearchForm, self).__init__(*args, **kwargs)
 
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
