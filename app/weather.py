@@ -1,12 +1,16 @@
 # # Import packages
 # import codecademylib
-# import numpy as np
-# import pandas as pd
+import numpy as np
+import pandas as pd
 # from scipy import stats
-# 
-# # Import matplotlib pyplot
-# from matplotlib import pyplot as plt
-#
+from matplotlib import pyplot as plt
+
+class Weather:
+    @classmethod
+    def base_url(cls):
+        return 'https://tvaroglu-sweater-weather.herokuapp.com/api/v1'
+
+
 # # Read in transactions data
 # greatest_books = pd.read_csv("top-hundred-books.csv")
 #
