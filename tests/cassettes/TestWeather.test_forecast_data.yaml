@@ -1,0 +1,56 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.26.0
+    method: GET
+    uri: https://tvaroglu-sweater-weather.herokuapp.com/api/v1/forecast?location=denver%2Cco
+  response:
+    body:
+      string: '{"data":{"id":null,"type":"forecast","attributes":{"current_weather":{"datetime":"2021-12-27T06:06:57.000+00:00","sunrise":"2021-12-26T14:19:42.000+00:00","sunset":"2021-12-26T23:41:29.000+00:00","temperature":33.1,"feels_like":33.1,"humidity":43,"uvi":0.0,"visibility":10000,"conditions":"few
+        clouds","icon":"02n"},"daily_weather":[{"date":"2021-12-26T19:00:00.000+00:00","sunrise":"2021-12-26T14:19:42.000+00:00","sunset":"2021-12-26T23:41:29.000+00:00","max_temp":50.81,"min_temp":33.1,"conditions":"clear
+        sky","icon":"01d"},{"date":"2021-12-27T19:00:00.000+00:00","sunrise":"2021-12-27T14:20:00.000+00:00","sunset":"2021-12-27T23:42:08.000+00:00","max_temp":47.88,"min_temp":30.42,"conditions":"scattered
+        clouds","icon":"03d"},{"date":"2021-12-28T19:00:00.000+00:00","sunrise":"2021-12-28T14:20:16.000+00:00","sunset":"2021-12-28T23:42:49.000+00:00","max_temp":37.83,"min_temp":26.24,"conditions":"overcast
+        clouds","icon":"04d"},{"date":"2021-12-29T19:00:00.000+00:00","sunrise":"2021-12-29T14:20:30.000+00:00","sunset":"2021-12-29T23:43:32.000+00:00","max_temp":31.08,"min_temp":20.44,"conditions":"clear
+        sky","icon":"01d"},{"date":"2021-12-30T19:00:00.000+00:00","sunrise":"2021-12-30T14:20:42.000+00:00","sunset":"2021-12-30T23:44:16.000+00:00","max_temp":46.83,"min_temp":28.58,"conditions":"clear
+        sky","icon":"01d"}],"hourly_weather":[{"time":"2021-12-27T06:00:00.000+00:00","temperature":33.1,"conditions":"few
+        clouds","icon":"02n"},{"time":"2021-12-27T07:00:00.000+00:00","temperature":33.71,"conditions":"few
+        clouds","icon":"02n"},{"time":"2021-12-27T08:00:00.000+00:00","temperature":34.12,"conditions":"few
+        clouds","icon":"02n"},{"time":"2021-12-27T09:00:00.000+00:00","temperature":34.32,"conditions":"clear
+        sky","icon":"01n"},{"time":"2021-12-27T10:00:00.000+00:00","temperature":33.71,"conditions":"clear
+        sky","icon":"01n"},{"time":"2021-12-27T11:00:00.000+00:00","temperature":32.65,"conditions":"clear
+        sky","icon":"01n"},{"time":"2021-12-27T12:00:00.000+00:00","temperature":31.78,"conditions":"clear
+        sky","icon":"01n"},{"time":"2021-12-27T13:00:00.000+00:00","temperature":30.74,"conditions":"clear
+        sky","icon":"01n"}]}}}'
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 27 Dec 2021 06:06:57 GMT
+      Etag:
+      - W/"d14da583b13532656cabcb3b00fb9e87"
+      Server:
+      - Cowboy
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - 1.1 vegur
+      X-Request-Id:
+      - b8c4f4c9-5ff6-4d49-ac33-873a27e864b4
+      X-Runtime:
+      - '0.486392'
+    status:
+      code: 200
+      message: OK
+version: 1
