@@ -51,6 +51,11 @@ class Weather:
             self.input_location = Weather.reformat(location)
         return Weather.api_error()
 
+    def list_constructor(self, list_of_dicts, dict_key):
+        output_list = []
+        for dict in list_of_dicts:
+            output_list.append(dict[dict_key])
+        return output_list
 
 # # Read in transactions data
 # greatest_books = pd.read_csv("top-hundred-books.csv")

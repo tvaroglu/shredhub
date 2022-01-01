@@ -46,3 +46,11 @@ class TestWeather:
         for h in self.hourly_weather:
             assert len(h.keys()) == 4
         assert self.weather.input_location == 'Denver'
+
+    def test_list_constructor(self):
+        self.weather = Weather()
+        self.forecast_data = self.weather.get_forecast('denver,co')
+        self.daily_max_temp_list = self.weather.list_constructor(self.weather.daily_weather, 'max_temp')
+        assert len(self.daily_max_temp_list) == 5
+        for data_point in self.daily_max_temp_list:
+            assert isinstance(data_point, float)
