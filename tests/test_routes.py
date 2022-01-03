@@ -126,11 +126,13 @@ class TestRoutes:
         self.request = self.client.get(f'/user/{self.user.username}')
         assert self.request.status_code == 200
         self.response = str(self.request.data)
-        assert f'Shredder: {self.user.username}' in self.response
+        assert 'Shredder:' in self.response
+        assert self.user.username in self.response
         assert 'About Me:' in self.response
         assert self.user.about_me in self.response
         assert f'{self.user.followers.count()} followers,' in self.response
         assert f'{self.user.followed.count()} following.' in self.response
+        assert 'Your posts:' in self.response
         TestRoutes.tear_down(test_app)
 
     def test_edit_profile(self, test_app, dummy_user):

@@ -69,22 +69,22 @@ class TestWeather:
     def test_mean(self):
         self.data_list_1 = [5, 1, 3, 4, 2]
         self.data_list_2 = [5, 1, 3, 4, 2, 2]
-        assert Weather.mean(self.data_list_1) == 3
-        assert Weather.mean(self.data_list_2) == 2.8
+        assert Weather.mean(self.data_list_1) == 3.00
+        assert Weather.mean(self.data_list_2) == 2.83
 
     def test_median(self):
         self.data_list_1 = [5, 1, 3, 4, 2]
         self.data_list_2 = [5, 1, 3, 4, 2, 2]
-        assert Weather.median(self.data_list_1) == 3
-        assert Weather.median(self.data_list_2) == 2.5
+        assert Weather.median(self.data_list_1) == 3.00
+        assert Weather.median(self.data_list_2) == 2.50
 
     def test_mode(self):
         self.data_list_1 = [5, 1, 3, 4, 2, 2]
         self.data_list_2 = ['snow', 'snow', 'clear sky']
         self.data_list_3 = [1, 2, 3, 4, 5]
-        assert Weather.mode(self.data_list_1) == 2
+        assert Weather.mode(self.data_list_1) == 2.00
         assert Weather.mode(self.data_list_2) == 'snow'
-        assert Weather.mode(self.data_list_3) == 1
+        assert Weather.mode(self.data_list_3) == 1.00
 
     def test_state_abbreviations_list(self):
         self.state_abbreviations_list = Weather.state_abbreviations_list()

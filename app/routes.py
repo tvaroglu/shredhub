@@ -72,15 +72,16 @@ def search():
 @login_required
 def weather_report():
     form = WeatherReportForm()
+    weather = Weather()
     if form.validate_on_submit():
         input_location = Weather.sanitize_request_params(form.city.data, form.state.data)
-        forecast_data = Weather()
-        forecast_data.get_forecast(input_location)
+        weather.get_forecast(input_location)
         flash(f'Now showing weather reports for: {Weather.reformat_input_location(form.city.data)}')
-        return redirect(url_for('weather_report', location=input_location,
-                        avg_hourly=forecast_data.avg_hourly_temp(),
-                        median_hourly=forecast_data.median_hourly_temp(),
-                        mode_hourly=forecast_data.mode_hourly_temp()))
+        return render_template('main/weather_report.html', title='Weather Report',
+                        location=input_location,
+                        avg_hourly=weather.avg_hourly_temp(),
+                        median_hourly=weather.median_hourly_temp(),
+                        mode_hourly=weather.mode_hourly_temp())
     return render_template('main/weather_report.html', title='Weather Report', form=form)
 
 @app.route('/user/<username>')

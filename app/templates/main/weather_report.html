@@ -3,7 +3,7 @@
 {% block content %}
   <div class="container flex-wrap-reverse card text-dark bg-light mb-3 card-custom">
     <h1>Weather Reports:</h1>
-    {% if not request.args.location %}
+    {% if not location %}
       <form action="" method="post">
           {{ form.hidden_tag() }}
           <p>
@@ -27,11 +27,12 @@
           <p>{{ form.submit() }}</p>
       </form>
     {% else %}
+      <br>
       <h3>Hourly Weather (Next 8 Hr.)</h3>
       <ul>
-        <li>Average Temperature: {{ request.args.avg_hourly }} °F</li>
-        <li>Median Temperature: {{ request.args.median_hourly }} °F</li>
-        <li>Mode Temperature: {{ request.args.mode_hourly }} °F</li>
+        <li>Average Temperature: {{ avg_hourly }} °F</li>
+        <li>Median Temperature: {{ median_hourly }} °F</li>
+        <li>Mode Temperature: {{ mode_hourly }} °F</li>
       <ul>
     {% endif %}
   </div>

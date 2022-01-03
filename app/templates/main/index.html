@@ -17,16 +17,17 @@
           </p>
           <p>{{ form.submit() }}</p>
       </form>
+      <hr>
       <br>
-      <h3>Your posts, and all posts from the shredders you follow:</h3>
+      <h3><em>Your posts, and all posts from the shredders you follow:</em></h3>
     {% elif title == 'Search' %}
       <h1>Search Results:</h1>
       <br>
     {% else %}
-      <h2>Looking for a weather report? Find them <a href="{{ url_for('weather_report') }}">here</a></h2>
+      <h1>Looking for a weather report? Find it <a href="{{ url_for('weather_report') }}">here</a></h1>
+      <hr>
       <br>
-      <h3>Your posts, and all posts from fellow shredders:</h3>
-      <br>
+      <h3><em>Your posts, and all posts from fellow shredders:</em></h3>
     {% endif %}
     {% for post in posts %}
         {% include 'main/_post.html' %}

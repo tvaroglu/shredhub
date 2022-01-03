@@ -21,7 +21,7 @@
           background-size: cover;
           background-attachment: fixed;
           font-family: 'Acme';
-          font-size: 1.125em;
+          font-size: 1.75em;
         }
         main {
           flex: 1;
@@ -30,70 +30,73 @@
           color: #198754;
         }
         a:hover {
-          color: #0dcaf0;
+          color: #6f03fc;
+        }
+        li.nav-hover:hover {
+          background-color: rgb(50,50,50);
         }
         .card-custom {
-          padding-top: 10px;
-          padding-left: 20px;
-          padding-right: 20px;
+          padding-top: 20px;
           border-radius: 20px;
-          border: 1px solid black;
-          width: 80%;
-          /* min-width: 30rem; */
-          justify-content: center;
+          border: 2px solid black;
+          background-image: linear-gradient(to right, rgba(0,179,255,0), rgba(0,179,255,1));
+          min-width: 30rem;
         }
         .container {
-          width: auto;
+          width: 80%;
+          align-content: center;
         }
         .user-avatar {
-          padding-right: 10px;
+          padding-right: 20px;
+          padding-bottom: 20px;
           border-radius: 40%;
         }
         .flash-custom {
           list-style-type: none;
           color: #6f03fc;
           opacity: 0.8;
+          text-align: center;
           -webkit-text-stroke-width: 1px;
           -webkit-text-stroke-color: black;
         }
       </style>
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#" style="padding-top: 5px;">Shredhub</a>
+          <a class="navbar-brand" href="#" style="padding-top: 6px; font-size: 1.25em;">Shredhub</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <li class="nav-item nav-hover">
                   <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
                 </li>
                 {% if current_user.is_anonymous %}
-                  <li class="nav-item">
+                  <li class="nav-item nav-hover">
                     <a class="nav-link active" aria-current="page" href="{{ url_for('login') }}">Login</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item nav-hover">
                     <a class="nav-link active" aria-current="page" href="{{ url_for('register') }}">Register</a>
                   </li>
                 {% else %}
-                  <li class="nav-item">
+                  <li class="nav-item nav-hover">
                     <a class="nav-link active" aria-current="page" href="{{ url_for('explore') }}">Explore</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item nav-hover">
                     <a class="nav-link active" aria-current="page" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item nav-hover">
                     <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
                   </li>
                 {% endif %}
             </ul>
             {% if g.search_form %}
               <form class="d-flex" method="get" action="{{ url_for('search') }}">
-                  {{ g.search_form.q(size=20, class='form-control me-2',
+                  {{ g.search_form.q(size=20, class='form-control-lg me-2',
                             placeholder=g.search_form.q.label.text) }}
-                  <button class="btn btn-outline-success" type="submit">Search</button>
+                  <button class="btn btn-outline-success" style="font-size: 0.9em;" type="submit">Search</button>
               </form>
             {% endif %}
           </div>
