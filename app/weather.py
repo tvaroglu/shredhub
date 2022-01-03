@@ -1,10 +1,8 @@
-# # Import packages
-# import codecademylib
+import requests
 import numpy as np
 import pandas as pd
-# from scipy import stats
+from scipy import stats
 from matplotlib import pyplot as plt
-import requests
 
 class Weather:
     @classmethod
@@ -34,6 +32,24 @@ class Weather:
     def reformat(cls, location):
         return location.split(',')[0].capitalize()
 
+    @classmethod
+    def mean(cls, data_list):
+        return round(np.average(data_list), 1)
+
+    @classmethod
+    def median(cls, data_list):
+        return np.median(data_list)
+
+    @classmethod
+    def median(cls, data_list):
+        return np.median(data_list)
+
+    @classmethod
+    def mode(cls, data_list):
+        result = stats.mode(data_list, axis=None)
+        # Note, returns min value in list by default if no mode:
+        return result[0]
+
     def __init__(self):
         self.current_weather = {}
         self.daily_weather = {}
@@ -56,6 +72,7 @@ class Weather:
         for dict in list_of_dicts:
             output_list.append(dict[dict_key])
         return output_list
+
 
 # # Read in transactions data
 # greatest_books = pd.read_csv("top-hundred-books.csv")
