@@ -1,9 +1,9 @@
 from app import app, db
 from app.models import User, Post
-from app.weather import Weather
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, WeatherReportForm
 from app.email import send_password_reset_email
+from app.weather import Weather
 from datetime import datetime
 from flask import g, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required

@@ -11,6 +11,11 @@ def test_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///'
     with app.app_context():
         db.create_all()
+        users = User.query.all()
+        if len(users) > 0:
+            for u in users:
+                db.session.delete(u)
+            db.session.commit()
         yield app
 
 @pytest.fixture(scope='function')

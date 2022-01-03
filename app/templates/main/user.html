@@ -34,7 +34,11 @@
     </table>
     <hr>
     <br>
-    <h3><em>Your posts:</em></h3>
+    {% if user == current_user %}
+      <h3><em>Your posts:</em></h3>
+    {% else %}
+      <h3><em>All posts:</em></h3>
+    {% endif %}
     {% for post in posts %}
         {% include 'main/_post.html' %}
     {% endfor %}

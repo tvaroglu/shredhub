@@ -8,12 +8,6 @@ class TestModels:
     def test_db_setup(cls, test_app):
         cls.users = User.query.all()
         cls.posts = Post.query.all()
-        if len(cls.users) > 0 or len(cls.posts) > 0:
-            for u in cls.users:
-                db.session.delete(u)
-            for p in cls.posts:
-                db.session.delete(p)
-            db.session.commit()
         assert len(cls.users) == 0
         assert len(cls.posts) == 0
 
