@@ -14,43 +14,54 @@ class TestWeather:
         ]
 
     def test_sanitize_request_params(self):
-        self.format_1 = 'Denver, CO'
-        self.format_2 = 'denver, co'
-        self.format_3 = 'DENVER,CO'
-        self.formats = [
-            self.format_1,
-            self.format_2,
-            self.format_3
+        self.city_format_1 = 'Denver'
+        self.city_format_2 = 'denver'
+        self.city_format_3 = 'DENVER'
+        self.city_formats = [
+            self.city_format_1,
+            self.city_format_2,
+            self.city_format_3
         ]
-        for f in self.formats:
-            assert Weather.sanitize_request_params(f) == 'denver,co'
+        for f in self.city_formats:
+            assert Weather.sanitize_request_params(f, 'CO') == 'denver,co'
 
-    def test_reformat_location(self):
-        assert Weather.reformat('denver,co') == 'Denver'
+    def test_reformat_input_location(self):
+        assert Weather.reformat_input_location('denver,co') == 'Denver'
 
-    def test_forecast_data(self):
+    def test_hourly_forecast_data(self):
         self.weather = Weather()
-        assert self.weather.current_weather == {}
-        assert self.weather.daily_weather == {}
         assert self.weather.hourly_weather == {}
         assert self.weather.input_location == ''
-        self.forecast_data = self.weather.get_forecast('denver,co')
-        self.current_weather = self.weather.current_weather
-        self.daily_weather = self.weather.daily_weather
+        self.weather.get_forecast('denver,co')
+        assert self.weather.input_location == 'Denver'
         self.hourly_weather = self.weather.hourly_weather
-        assert len(self.current_weather.keys()) == 10
-        assert len(self.daily_weather) == 5
-        for d in self.daily_weather:
-            assert len(d.keys()) == 7
         assert len(self.hourly_weather) == 8
         for h in self.hourly_weather:
             assert len(h.keys()) == 4
-        assert self.weather.input_location == 'Denver'
+        assert isinstance(self.weather.avg_hourly_temp(), float)
+        assert isinstance(self.weather.median_hourly_temp(), float)
+        assert isinstance(self.weather.mode_hourly_temp(), float)
+
+    def test_current_forecast_data(self):
+        self.weather = Weather()
+        assert self.weather.current_weather == {}
+        self.weather.get_forecast('denver,co')
+        self.current_weather = self.weather.current_weather
+        assert len(self.current_weather.keys()) == 10
+
+    def test_daily_forecast_data(self):
+        self.weather = Weather()
+        assert self.weather.daily_weather == {}
+        self.weather.get_forecast('denver,co')
+        self.daily_weather = self.weather.daily_weather
+        assert len(self.daily_weather) == 5
+        for d in self.daily_weather:
+            assert len(d.keys()) == 7
 
     def test_list_constructor(self):
         self.weather = Weather()
-        self.forecast_data = self.weather.get_forecast('denver,co')
-        self.daily_max_temp_list = self.weather.list_constructor(self.weather.daily_weather, 'max_temp')
+        self.weather.get_forecast('denver,co')
+        self.daily_max_temp_list = Weather.list_constructor(self.weather.daily_weather, 'max_temp')
         assert len(self.daily_max_temp_list) == 5
         for data_point in self.daily_max_temp_list:
             assert isinstance(data_point, float)
@@ -74,3 +85,10 @@ class TestWeather:
         assert Weather.mode(self.data_list_1) == 2
         assert Weather.mode(self.data_list_2) == 'snow'
         assert Weather.mode(self.data_list_3) == 1
+
+    def test_state_abbreviations_list(self):
+        self.state_abbreviations_list = Weather.state_abbreviations_list()
+        assert len(self.state_abbreviations_list) == 57
+        for state_abbreviation in self.state_abbreviations_list:
+            assert isinstance(state_abbreviation, str)
+            assert len(state_abbreviation) == 2

@@ -23,6 +23,8 @@
       <h1>Search Results:</h1>
       <br>
     {% else %}
+      <h2>Looking for a weather report? Find them <a href="{{ url_for('weather_report') }}">here</a></h2>
+      <br>
       <h3>Your posts, and all posts from fellow shredders:</h3>
       <br>
     {% endif %}

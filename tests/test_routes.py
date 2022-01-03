@@ -147,3 +147,15 @@ class TestRoutes:
         assert 'About Me' in self.response
         assert 'Submit' in self.response
         TestRoutes.tear_down(test_app)
+
+    def test_weather_report(self, test_app):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.request = self.client.get('/weather_report')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Weather Reports:' in self.response
+        assert 'City' in self.response
+        assert 'State' in self.response
+        assert 'Search' in self.response
+        TestRoutes.tear_down(test_app)
