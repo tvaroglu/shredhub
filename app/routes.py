@@ -1,7 +1,9 @@
 from app import app, db
 from app.models import User, Post
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm, SearchForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, WeatherReportForm
 from app.email import send_password_reset_email
+from app.weather import Weather
 from datetime import datetime
 from flask import g, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user, login_required
@@ -35,8 +37,7 @@ def index():
         prev_url = url_for('index', page=posts.prev_num) \
             if posts.has_prev else None
         return render_template('main/index.html', title='Home', form=form,
-                               posts=posts.items, next_url=next_url,
-                               prev_url=prev_url)
+                               posts=posts.items, next_url=next_url, prev_url=prev_url)
     return render_template('main/index.html', title='Home', form=form)
 
 @app.route('/explore')
@@ -51,7 +52,7 @@ def explore():
         prev_url = url_for('explore', page=posts.prev_num) \
             if posts.has_prev else None
         return render_template('main/index.html', title='Explore', posts=posts.items,
-                          next_url=next_url, prev_url=prev_url)
+                               next_url=next_url, prev_url=prev_url)
     return render_template('main/index.html', title='Explore')
 
 @app.route('/search', methods=['GET'])
@@ -65,7 +66,27 @@ def search():
     prev_url = url_for('search', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('main/index.html', title='Search', posts=posts.items,
-                      next_url=next_url, prev_url=prev_url)
+                           next_url=next_url, prev_url=prev_url)
+
+@app.route('/weather', methods=['GET', 'POST'])
+@login_required
+def weather():
+    form = WeatherReportForm()
+    weather = Weather()
+    if form.validate_on_submit():
+        input_location = Weather.sanitize_request_params(form.city.data, form.state.data)
+        if weather.get_forecast(input_location) == Weather.api_error():
+            flash('Sorry! The weather API is currently unavailable, please try again later.')
+        flash(f'Now showing weather reports for: {Weather.reformat_input_location(form.city.data)}')
+        return render_template('main/weather.html', title='Weather Report',
+                        location=input_location,
+                        avg_hourly=weather.avg_hourly_temp(),
+                        median_hourly=weather.median_hourly_temp(),
+                        hourly_conditions=weather.forecasted_conditions('hourly'),
+                        avg_daily_highs=weather.avg_daily_highs(),
+                        avg_daily_lows=weather.avg_daily_lows(),
+                        daily_conditions=weather.forecasted_conditions('daily'))
+    return render_template('main/weather.html', title='Weather Report', form=form)
 
 @app.route('/user/<username>')
 @login_required
@@ -93,15 +114,15 @@ def edit_profile():
             current_user.updated_at = datetime.utcnow()
             db.session.commit()
             flash('Your changes have been saved.')
-            return redirect(url_for('user', username=User.clean_username(form.username.data)))
+            return redirect(url_for('user',
+                            username=User.clean_username(form.username.data)))
         elif request.method == 'GET':
             form.username.data = current_user.username
             form.about_me.data = current_user.about_me
         return render_template('main/edit_profile.html', title='Edit Profile',
                                form=form)
     form = EditProfileForm('')
-    return render_template('main/edit_profile.html', title='Edit Profile',
-                           form=form)
+    return render_template('main/edit_profile.html', title='Edit Profile', form=form)
 
 @app.route('/follow/<username>', methods=['POST'])
 @login_required
@@ -137,7 +158,8 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=User.clean_username(form.username.data), email=form.email.data.lower())
+        user = User(username=User.clean_username(form.username.data),
+                    email=form.email.data.lower())
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -157,7 +179,8 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
-        # determine if URL is relative vs absolute, and parse with Werkzeug.url_parse() to check if netloc component is set:
+        # determine if URL is relative vs absolute, and parse with Werkzeug.url_parse()
+            # (to check if netloc component is set):
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         flash('Welcome back, fellow Shred-head!')

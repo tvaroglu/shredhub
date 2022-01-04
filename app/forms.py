@@ -1,7 +1,8 @@
 from app.models import User
+from app.weather import Weather
 from flask import request
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
 
 class LoginForm(FlaskForm):
@@ -29,6 +30,16 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password_confirmation = PasswordField(
+        'Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')
+
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About Me', validators=[Length(min=0, max=1000)])
@@ -46,6 +57,9 @@ class EditProfileForm(FlaskForm):
             elif user is not None:
                 raise ValidationError('Please use a different username.')
 
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
+
 class PostForm(FlaskForm):
     post = TextAreaField("Where's the powder at today?", validators=[
         DataRequired(), Length(min=1, max=1000)])
@@ -61,15 +75,7 @@ class SearchForm(FlaskForm):
             kwargs['csrf_enabled'] = False
         super(SearchForm, self).__init__(*args, **kwargs)
 
-class ResetPasswordRequestForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Request Password Reset')
-
-class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
-    password_confirmation = PasswordField(
-        'Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Reset Password')
-
-class EmptyForm(FlaskForm):
-    submit = SubmitField('Submit')
+class WeatherReportForm(FlaskForm):
+    city = StringField('City', validators=[DataRequired()])
+    state = SelectField('State', validators=[DataRequired()], choices=Weather.state_abbreviations_list())
+    submit = SubmitField('Search')

@@ -78,6 +78,7 @@ class TestRoutes:
         self.response = str(self.request.data)
         assert 'Where&#39;s the powder at today?' in self.response
         assert 'Submit' in self.response
+        assert 'Your posts, and all posts from the shredders you follow:'
         TestRoutes.tear_down(test_app)
 
     def test_explore(self, test_app):
@@ -86,8 +87,8 @@ class TestRoutes:
         self.request = self.client.get('/explore')
         assert self.request.status_code == 200
         self.response = str(self.request.data)
-        assert 'Your posts, and all posts' in self.response
-        assert 'from fellow shredders:' in self.response
+        assert 'Looking for a weather report?' in self.response
+        assert 'Your posts, and all posts from fellow shredders:' in self.response
         TestRoutes.tear_down(test_app)
 
     def test_password_reset_request(self, test_app):
@@ -126,11 +127,13 @@ class TestRoutes:
         self.request = self.client.get(f'/user/{self.user.username}')
         assert self.request.status_code == 200
         self.response = str(self.request.data)
-        assert f'Shredder: {self.user.username}' in self.response
+        assert 'Shredder:' in self.response
+        assert self.user.username in self.response
         assert 'About Me:' in self.response
         assert self.user.about_me in self.response
         assert f'{self.user.followers.count()} followers,' in self.response
         assert f'{self.user.followed.count()} following.' in self.response
+        assert 'All posts:' in self.response
         TestRoutes.tear_down(test_app)
 
     def test_edit_profile(self, test_app, dummy_user):
@@ -146,4 +149,16 @@ class TestRoutes:
         assert 'Username' in self.response
         assert 'About Me' in self.response
         assert 'Submit' in self.response
+        TestRoutes.tear_down(test_app)
+
+    def test_weather_report(self, test_app):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.request = self.client.get('/weather')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Weather Reports:' in self.response
+        assert 'City' in self.response
+        assert 'State' in self.response
+        assert 'Search' in self.response
         TestRoutes.tear_down(test_app)

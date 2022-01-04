@@ -5,13 +5,11 @@ from app.models import User, Post, load_user
 
 class TestModels:
     @classmethod
-    def set_up(cls, test_app):
-        if len(User.query.all()) > 0 or len(Post.query.all()) > 0:
-            for u in User.query.all():
-                db.session.delete(u)
-            for p in Post.query.all():
-                db.session.delete(p)
-            db.session.commit()
+    def test_db_setup(cls, test_app):
+        cls.users = User.query.all()
+        cls.posts = Post.query.all()
+        assert len(cls.users) == 0
+        assert len(cls.posts) == 0
 
     @classmethod
     def tear_down(cls, test_app):
@@ -19,7 +17,7 @@ class TestModels:
         db.drop_all()
 
     def test_user_attributes(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         db.session.add(self.user)
         db.session.commit()
@@ -35,13 +33,13 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test__repr__(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         assert self.user.__repr__() == f'<User: {self.user.username}>'
         TestModels.tear_down(test_app)
 
     def test_load_user(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         db.session.add(self.user)
         db.session.commit()
@@ -53,14 +51,14 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test_password_hashing(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         assert self.user.check_password('guest') == True
         assert self.user.check_password('foo') == False
         TestModels.tear_down(test_app)
 
     def test_avatar(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         split = self.user.avatar(128).split('/')
         assert split[0] == 'https:'
@@ -70,7 +68,7 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test_follow(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user_1 = dummy_user
         self.user_2 = User(username='Guest', email='guest@example.com')
         db.session.add(self.user_1)
@@ -94,7 +92,7 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test_post_attributes(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         now = datetime.utcnow()
         self.post = Post(body='test post', author=self.user, created_at=now)
@@ -110,7 +108,7 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test_followed_posts(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         # create four users:
         self.user_1 = dummy_user
         self.user_2 = User(username='Guest', email='guest@example.com')
@@ -147,7 +145,7 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test_password_reset_token(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         assert User.verify_password_reset_token('foo') == None
         db.session.add(self.user)
@@ -158,12 +156,12 @@ class TestModels:
         TestModels.tear_down(test_app)
 
     def test_clean_username(self, test_app):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.bad_username = 'Admin/\\'
         assert User.clean_username(self.bad_username) == 'Admin'
 
     def test_post_search(self, test_app, dummy_user):
-        TestModels.set_up(test_app)
+        TestModels.test_db_setup(test_app)
         self.user = dummy_user
         now = datetime.utcnow()
         self.post_1 = Post(body='post from admin', author=self.user,

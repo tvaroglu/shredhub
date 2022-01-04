@@ -3,32 +3,42 @@
 {% block content %}
   <div class="container flex-wrap-reverse card text-dark bg-light mb-3 card-custom">
     <table>
-        <tr valign="center">
-            <td><img class="user-avatar" src="{{ user.avatar(128) }}"></td>
+        <tr valign="top">
+            <td align="center">
+              <img class="user-avatar" src="{{ user.avatar(200) }}">
+              <br>
+              {% if current_user.is_authenticated %}
+                {% if user == current_user %}
+                  <a href="{{ url_for('edit_profile') }}" class="btn btn-light btn-outline-dark" style="font-size:0.955em;">Edit Profile</a>
+                {% elif not current_user.is_following(user) %}
+                  <form action="{{ url_for('follow', username=user.username, action='follow') }}" method="post">
+                      {{ form.hidden_tag() }}
+                      {{ form.submit(value='Follow') }}
+                  </form>
+                {% else %}
+                  <form action="{{ url_for('follow', username=user.username, action='unfollow') }}" method="post">
+                      {{ form.hidden_tag() }}
+                      {{ form.submit(value='Unfollow') }}
+                  </form>
+                {% endif %}
+              {% endif %}
+            </td>
             <td>
-              <h1>Shredder: {{ user.username }}</h1>
-              {% if user.about_me %}<p>About Me: <br>{{ user.about_me }}</p>{% endif %}
-              {% if user.last_seen %}<p>Last Seen On: <br>{{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
-              <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-          {% if current_user.is_authenticated %}
-            {% if user == current_user %}
-              <a href="{{ url_for('edit_profile') }}" class="btn btn-light btn-outline-dark" style="font-size:0.955em;">Edit Profile</a>
-            {% elif not current_user.is_following(user) %}
-              <form action="{{ url_for('follow', username=user.username, action='follow') }}" method="post">
-                  {{ form.hidden_tag() }}
-                  {{ form.submit(value='Follow') }}
-              </form>
-            {% else %}
-              <form action="{{ url_for('follow', username=user.username, action='unfollow') }}" method="post">
-                  {{ form.hidden_tag() }}
-                  {{ form.submit(value='Unfollow') }}
-              </form>
-            {% endif %}
-          {% endif %}
-          </td>
+              <h1><u>Shredder:</u> &nbsp;{{ user.username }}</h1>
+              <br>
+              {% if user.about_me %}<h2><u>About Me:</u> &nbsp;{{ user.about_me }}</h2>{% endif %}
+              {% if user.last_seen %}<h2><u>Last Seen On:</u> &nbsp;{{ moment(user.last_seen).format('LLL') }}</h2>{% endif %}
+              <h2>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</h2>
+            </td>
         </tr>
     </table>
     <hr>
+    <br>
+    {% if user == current_user %}
+      <h3><em>Your posts:</em></h3>
+    {% else %}
+      <h3><em>All posts:</em></h3>
+    {% endif %}
     {% for post in posts %}
         {% include 'main/_post.html' %}
     {% endfor %}
