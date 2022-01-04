@@ -79,20 +79,35 @@ class Weather:
             self.daily_weather = forecast_data['daily_weather']
             self.hourly_weather = forecast_data['hourly_weather']
             self.input_location = Weather.reformat_input_location(location)
+            return self
         return Weather.api_error()
+
+    def forecasted_temps(self, data_set, metric=None):
+        if data_set == 'hourly':
+            return Weather.list_constructor(self.hourly_weather, 'temperature')
+        else:
+            if metric == 'highs':
+                return Weather.list_constructor(self.daily_weather, 'max_temp')
+            return Weather.list_constructor(self.daily_weather, 'min_temp')
+
+    def forecasted_conditions(self, data_set):
+        if data_set == 'hourly':
+            data = Weather.list_constructor(self.hourly_weather, 'conditions')
+        data = Weather.list_constructor(self.daily_weather, 'conditions')
+        return Weather.mode(data).capitalize()
 
     # @app.context_processor
     def avg_hourly_temp(self):
-        data = Weather.list_constructor(self.hourly_weather, 'temperature')
-        return Weather.mean(data)
+        return Weather.mean(self.forecasted_temps('hourly'))
 
     def median_hourly_temp(self):
-        data = Weather.list_constructor(self.hourly_weather, 'temperature')
-        return Weather.median(data)
+        return Weather.median(self.forecasted_temps('hourly'))
 
-    def mode_hourly_temp(self):
-        data = Weather.list_constructor(self.hourly_weather, 'temperature')
-        return Weather.mode(data)
+    def avg_daily_highs(self):
+        return Weather.mean(self.forecasted_temps('daily', 'highs'))
+
+    def avg_daily_lows(self):
+        return Weather.mean(self.forecasted_temps('daily', 'lows'))
 
 
 # # Read in transactions data

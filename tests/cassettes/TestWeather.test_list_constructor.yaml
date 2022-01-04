@@ -14,20 +14,19 @@ interactions:
     uri: https://tvaroglu-sweater-weather.herokuapp.com/api/v1/forecast?location=denver%2Cco
   response:
     body:
-      string: '{"data":{"id":null,"type":"forecast","attributes":{"current_weather":{"datetime":"2022-01-03T23:07:10.000+00:00","sunrise":"2022-01-03T14:21:09.000+00:00","sunset":"2022-01-03T23:47:29.000+00:00","temperature":40.59,"feels_like":40.59,"humidity":94,"uvi":0.16,"visibility":2574,"conditions":"overcast
-        clouds","icon":"04d"},"daily_weather":[{"date":"2022-01-03T19:00:00.000+00:00","sunrise":"2022-01-03T14:21:09.000+00:00","sunset":"2022-01-03T23:47:29.000+00:00","max_temp":40.59,"min_temp":24.3,"conditions":"overcast
-        clouds","icon":"04d"},{"date":"2022-01-04T19:00:00.000+00:00","sunrise":"2022-01-04T14:21:10.000+00:00","sunset":"2022-01-04T23:48:22.000+00:00","max_temp":44.06,"min_temp":28.89,"conditions":"overcast
-        clouds","icon":"04d"},{"date":"2022-01-05T19:00:00.000+00:00","sunrise":"2022-01-05T14:21:09.000+00:00","sunset":"2022-01-05T23:49:15.000+00:00","max_temp":42.04,"min_temp":16.32,"conditions":"light
-        snow","icon":"13d"},{"date":"2022-01-06T19:00:00.000+00:00","sunrise":"2022-01-06T14:21:06.000+00:00","sunset":"2022-01-06T23:50:10.000+00:00","max_temp":35.15,"min_temp":16.2,"conditions":"overcast
-        clouds","icon":"04d"},{"date":"2022-01-07T19:00:00.000+00:00","sunrise":"2022-01-07T14:21:01.000+00:00","sunset":"2022-01-07T23:51:06.000+00:00","max_temp":46.72,"min_temp":35.02,"conditions":"scattered
-        clouds","icon":"03d"}],"hourly_weather":[{"time":"2022-01-03T23:00:00.000+00:00","temperature":40.59,"conditions":"overcast
-        clouds","icon":"04d"},{"time":"2022-01-04T00:00:00.000+00:00","temperature":38.86,"conditions":"overcast
-        clouds","icon":"04n"},{"time":"2022-01-04T01:00:00.000+00:00","temperature":36.79,"conditions":"overcast
-        clouds","icon":"04n"},{"time":"2022-01-04T02:00:00.000+00:00","temperature":34.75,"conditions":"overcast
-        clouds","icon":"04n"},{"time":"2022-01-04T03:00:00.000+00:00","temperature":32.54,"conditions":"broken
-        clouds","icon":"04n"},{"time":"2022-01-04T04:00:00.000+00:00","temperature":30.52,"conditions":"scattered
-        clouds","icon":"03n"},{"time":"2022-01-04T05:00:00.000+00:00","temperature":30.38,"conditions":"broken
-        clouds","icon":"04n"},{"time":"2022-01-04T06:00:00.000+00:00","temperature":30.6,"conditions":"broken
+      string: '{"data":{"id":null,"type":"forecast","attributes":{"current_weather":{"datetime":"2022-01-04T00:31:25.000+00:00","sunrise":"2022-01-03T14:21:09.000+00:00","sunset":"2022-01-03T23:47:29.000+00:00","temperature":34.23,"feels_like":30.74,"humidity":54,"uvi":0.0,"visibility":10000,"conditions":"broken
+        clouds","icon":"04n"},"daily_weather":[{"date":"2022-01-03T19:00:00.000+00:00","sunrise":"2022-01-03T14:21:09.000+00:00","sunset":"2022-01-03T23:47:29.000+00:00","max_temp":39.09,"min_temp":24.3,"conditions":"overcast
+        clouds","icon":"04d"},{"date":"2022-01-04T19:00:00.000+00:00","sunrise":"2022-01-04T14:21:10.000+00:00","sunset":"2022-01-04T23:48:22.000+00:00","max_temp":43.75,"min_temp":28.15,"conditions":"few
+        clouds","icon":"02d"},{"date":"2022-01-05T19:00:00.000+00:00","sunrise":"2022-01-05T14:21:09.000+00:00","sunset":"2022-01-05T23:49:15.000+00:00","max_temp":36.59,"min_temp":13.35,"conditions":"snow","icon":"13d"},{"date":"2022-01-06T19:00:00.000+00:00","sunrise":"2022-01-06T14:21:06.000+00:00","sunset":"2022-01-06T23:50:10.000+00:00","max_temp":32.65,"min_temp":12.56,"conditions":"light
+        snow","icon":"13d"},{"date":"2022-01-07T19:00:00.000+00:00","sunrise":"2022-01-07T14:21:01.000+00:00","sunset":"2022-01-07T23:51:06.000+00:00","max_temp":43.34,"min_temp":30.47,"conditions":"broken
+        clouds","icon":"04d"}],"hourly_weather":[{"time":"2022-01-04T00:00:00.000+00:00","temperature":33.71,"conditions":"overcast
+        clouds","icon":"04n"},{"time":"2022-01-04T01:00:00.000+00:00","temperature":34.23,"conditions":"broken
+        clouds","icon":"04n"},{"time":"2022-01-04T02:00:00.000+00:00","temperature":33.48,"conditions":"broken
+        clouds","icon":"04n"},{"time":"2022-01-04T03:00:00.000+00:00","temperature":32.59,"conditions":"broken
+        clouds","icon":"04n"},{"time":"2022-01-04T04:00:00.000+00:00","temperature":31.78,"conditions":"broken
+        clouds","icon":"04n"},{"time":"2022-01-04T05:00:00.000+00:00","temperature":30.99,"conditions":"scattered
+        clouds","icon":"03n"},{"time":"2022-01-04T06:00:00.000+00:00","temperature":30.42,"conditions":"broken
+        clouds","icon":"04n"},{"time":"2022-01-04T07:00:00.000+00:00","temperature":30.34,"conditions":"overcast
         clouds","icon":"04n"}]}}}'
     headers:
       Cache-Control:
@@ -37,9 +36,9 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 03 Jan 2022 23:07:11 GMT
+      - Tue, 04 Jan 2022 00:31:25 GMT
       Etag:
-      - W/"94bd6e28de6dd340798efa7f4541ed53"
+      - W/"1d1818daf68b68b5de2cf108c16df8b5"
       Server:
       - Cowboy
       Transfer-Encoding:
@@ -47,9 +46,9 @@ interactions:
       Via:
       - 1.1 vegur
       X-Request-Id:
-      - bda20654-a68d-46cc-bd2b-9090d7a3ca89
+      - 0b423697-1ef8-46f1-be0b-a1205871bafb
       X-Runtime:
-      - '0.065078'
+      - '0.361934'
     status:
       code: 200
       message: OK

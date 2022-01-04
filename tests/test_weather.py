@@ -40,14 +40,7 @@ class TestWeather:
             assert len(h.keys()) == 4
         assert isinstance(self.weather.avg_hourly_temp(), float)
         assert isinstance(self.weather.median_hourly_temp(), float)
-        assert isinstance(self.weather.mode_hourly_temp(), float)
-
-    def test_current_forecast_data(self):
-        self.weather = Weather()
-        assert self.weather.current_weather == {}
-        self.weather.get_forecast('denver,co')
-        self.current_weather = self.weather.current_weather
-        assert len(self.current_weather.keys()) == 10
+        assert isinstance(self.weather.forecasted_conditions('hourly'), str)
 
     def test_daily_forecast_data(self):
         self.weather = Weather()
@@ -57,6 +50,17 @@ class TestWeather:
         assert len(self.daily_weather) == 5
         for d in self.daily_weather:
             assert len(d.keys()) == 7
+        assert isinstance(self.weather.avg_daily_highs(), float)
+        assert isinstance(self.weather.avg_daily_lows(), float)
+        assert isinstance(self.weather.forecasted_conditions('daily'), str)
+
+    def test_current_forecast_data(self):
+        self.weather = Weather()
+        assert self.weather.current_weather == {}
+        self.current_forecast = self.weather.get_forecast('denver,co')
+        assert str(type(self.current_forecast)) == "<class 'app.weather.Weather'>"
+        self.current_weather = self.weather.current_weather
+        assert len(self.current_weather.keys()) == 10
 
     def test_list_constructor(self):
         self.weather = Weather()
@@ -79,12 +83,10 @@ class TestWeather:
         assert Weather.median(self.data_list_2) == 2.50
 
     def test_mode(self):
-        self.data_list_1 = [5, 1, 3, 4, 2, 2]
-        self.data_list_2 = ['snow', 'snow', 'clear sky']
-        self.data_list_3 = [1, 2, 3, 4, 5]
-        assert Weather.mode(self.data_list_1) == 2.00
-        assert Weather.mode(self.data_list_2) == 'snow'
-        assert Weather.mode(self.data_list_3) == 1.00
+        self.data_list_1 = ['snow', 'snow', 'clear sky']
+        self.data_list_2 = ['snow', 'clear sky']
+        assert Weather.mode(self.data_list_1) == 'snow'
+        assert Weather.mode(self.data_list_2) == 'clear sky'
 
     def test_state_abbreviations_list(self):
         self.state_abbreviations_list = Weather.state_abbreviations_list()

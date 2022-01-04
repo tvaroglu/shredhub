@@ -154,7 +154,7 @@ class TestRoutes:
     def test_weather_report(self, test_app):
         self.generator = TestRoutes.set_up(test_app)
         self.client = next(self.generator)
-        self.request = self.client.get('/weather_report')
+        self.request = self.client.get('/weather')
         assert self.request.status_code == 200
         self.response = str(self.request.data)
         assert 'Weather Reports:' in self.response

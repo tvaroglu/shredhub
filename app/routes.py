@@ -68,21 +68,25 @@ def search():
     return render_template('main/index.html', title='Search', posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
 
-@app.route('/weather_report', methods=['GET', 'POST'])
+@app.route('/weather', methods=['GET', 'POST'])
 @login_required
-def weather_report():
+def weather():
     form = WeatherReportForm()
     weather = Weather()
     if form.validate_on_submit():
         input_location = Weather.sanitize_request_params(form.city.data, form.state.data)
-        weather.get_forecast(input_location)
+        if weather.get_forecast(input_location) == Weather.api_error():
+            flash('Sorry! The weather API is currently unavailable, please try again later.')
         flash(f'Now showing weather reports for: {Weather.reformat_input_location(form.city.data)}')
-        return render_template('main/weather_report.html', title='Weather Report',
+        return render_template('main/weather.html', title='Weather Report',
                         location=input_location,
                         avg_hourly=weather.avg_hourly_temp(),
                         median_hourly=weather.median_hourly_temp(),
-                        mode_hourly=weather.mode_hourly_temp())
-    return render_template('main/weather_report.html', title='Weather Report', form=form)
+                        hourly_conditions=weather.forecasted_conditions('hourly'),
+                        avg_daily_highs=weather.avg_daily_highs(),
+                        avg_daily_lows=weather.avg_daily_lows(),
+                        daily_conditions=weather.forecasted_conditions('daily'))
+    return render_template('main/weather.html', title='Weather Report', form=form)
 
 @app.route('/user/<username>')
 @login_required
