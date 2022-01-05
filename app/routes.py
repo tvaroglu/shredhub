@@ -4,8 +4,10 @@ from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, Res
 from app.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, WeatherReportForm
 from app.email import send_password_reset_email
 from app.weather import Weather
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import io
 from datetime import datetime
-from flask import g, render_template, request, flash, redirect, url_for
+from flask import g, render_template, request, flash, redirect, url_for, Response
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -87,6 +89,14 @@ def weather():
                         avg_daily_lows=weather.avg_daily_lows(),
                         daily_conditions=weather.forecasted_conditions('daily'))
     return render_template('main/weather.html', title='Weather Report', form=form)
+
+@app.route('/static/plot.png')
+def plot_png():
+    weather = Weather()
+    fig = weather.create_plot()
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 @app.route('/user/<username>')
 @login_required
