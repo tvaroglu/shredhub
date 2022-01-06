@@ -94,3 +94,8 @@ class TestWeather:
         for state_abbreviation in self.state_abbreviations_list:
             assert isinstance(state_abbreviation, str)
             assert len(state_abbreviation) == 2
+
+    def test_create_plot(self):
+        self.weather = Weather()
+        self.plot = self.weather.create_plot()
+        assert str(type(self.plot)) == "<class 'matplotlib.figure.Figure'>"
