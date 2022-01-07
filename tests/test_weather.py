@@ -26,7 +26,10 @@ class TestWeather:
             assert Weather.sanitize_request_params(f, 'CO') == 'denver,co'
 
     def test_reformat_input_location(self):
-        assert Weather.reformat_input_location('denver,co') == 'Denver'
+        self.location_1 = 'denver,co'
+        self.location_2 = 'crested butte,co'
+        assert Weather.reformat_input_location(self.location_1) == 'Denver'
+        assert Weather.reformat_input_location(self.location_2) == 'Crested Butte'
 
     def test_current_forecast_data(self):
         self.weather = Weather()
@@ -103,4 +106,5 @@ class TestWeather:
     def test_create_bar_chart(self):
         self.weather = Weather()
         self.plot = self.weather.create_bar_chart('denver,co', ['one', 'two', 'three'], [1, 2, 3])
-        assert str(type(self.plot)) == "<class 'matplotlib.figure.Figure'>"
+        # assert str(type(self.plot)) == "<class 'matplotlib.figure.Figure'>"
+        assert isinstance(self.plot, str)

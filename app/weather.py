@@ -2,7 +2,7 @@ import requests
 import numpy as np
 import pandas as pd
 from scipy import stats
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt, mpld3
 from matplotlib.figure import Figure
 # from app import app
 
@@ -31,7 +31,12 @@ class Weather:
 
     @classmethod
     def reformat_input_location(cls, location):
-        return location.split(',')[0].capitalize()
+        city = location.split(',')[0]
+        split = city.split(' ')
+        output = ''
+        for s in split:
+            output += s.capitalize() + ' '
+        return output[0:-1]
 
     @classmethod
     def list_constructor(cls, list_of_dicts, dict_key):
@@ -128,11 +133,12 @@ class Weather:
 
     def create_bar_chart(self, input_location=None, x_axis=None, y_axis=None):
         # TODO: figure out args from routes to dynamically render charts
-        self.get_forecast(input_location)
+        if input_location is not None:
+            self.get_forecast(input_location)
         fig = Figure()
         ax = fig.add_axes([0, 0, 1, 1])
         x_axis = Weather.list_constructor(self.hourly_weather, 'time')
         y_axis = Weather.list_constructor(self.hourly_weather, 'temperature')
         bars = ax.bar(x_axis, y_axis)
         ax.bar_label(bars)
-        return fig
+        return mpld3.fig_to_html(fig)

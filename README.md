@@ -108,6 +108,8 @@ $ source venv/bin/activate
 (venv) $ flask db upgrade
 ```
 
+<img src="https://user-images.githubusercontent.com/58891447/148485667-6504813d-7688-4228-babc-172777d5bcde.png" width=100%/>  
+
 #### How to run the test suite:
 ```bash
 $ source venv/bin/activate
@@ -126,7 +128,6 @@ $ source venv/bin/activate
 [2021-12-21 16:20:00,420] INFO in __init__: Shredhub startup
 * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
-
 
 #### Link to deployed application:
 Check it out [here](https://shredhub.herokuapp.com/login)!
