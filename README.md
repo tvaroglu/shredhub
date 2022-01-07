@@ -149,4 +149,4 @@ Check it out [here](https://shredhub.herokuapp.com/login)!
 [stars-url]: https://github.com/tvaroglu/shredhub/stargazers
 [issues-shield]: https://img.shields.io/github/issues/tvaroglu/shredhub.svg?style=flat
 [issues-url]: https://github.com/tvaroglu/shredhub/issues
-[build-badge]: https://img.shields.io/circleci/build/github/tvaroglu/shredhub?style=flat-square
+[build-badge]: https://img.shields.io/circleci/build/github/tvaroglu/shredhub?style=flat
