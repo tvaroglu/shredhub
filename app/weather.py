@@ -2,7 +2,8 @@ import requests
 import numpy as np
 import pandas as pd
 from scipy import stats
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt, mpld3
+from matplotlib.figure import Figure
 # from app import app
 
 class Weather:
@@ -25,11 +26,17 @@ class Weather:
 
     @classmethod
     def sanitize_request_params(cls, city_param, state_param):
+        city_param = city_param.replace(',', '')
         return f'{city_param.lower()},{state_param.lower()}'
 
     @classmethod
     def reformat_input_location(cls, location):
-        return location.split(',')[0].capitalize()
+        city = location.split(',')[0]
+        split = city.split(' ')
+        output = ''
+        for s in split:
+            output += s.capitalize() + ' '
+        return output[0:-1]
 
     @classmethod
     def list_constructor(cls, list_of_dicts, dict_key):
@@ -78,7 +85,7 @@ class Weather:
             self.current_weather = forecast_data['current_weather']
             self.daily_weather = forecast_data['daily_weather']
             self.hourly_weather = forecast_data['hourly_weather']
-            self.input_location = Weather.reformat_input_location(location)
+            self.input_location = location
             return self
         return Weather.api_error()
 
@@ -109,26 +116,29 @@ class Weather:
     def avg_daily_lows(self):
         return Weather.mean(self.forecasted_temps('daily', 'lows'))
 
+    def conditions(self):
+        return self.current_weather['conditions'].capitalize()
 
-# # Read in transactions data
-# greatest_books = pd.read_csv("top-hundred-books.csv")
-#
-# # Save transaction times to a separate numpy array
-# author_ages = greatest_books['Ages']
-#
-# # Calculate the average and median value of the author_ages array
-# average_age = np.average(author_ages)
-# median_age = np.median(author_ages)
-# mode_age = 38
-#
-# # Plot the figure
-# plt.hist(author_ages, range=(10, 80), bins=14,  edgecolor='black')
-# plt.title("Author Ages at Publication")
-# plt.xlabel("Publication Age")
-# plt.ylabel("Count")
-# plt.axvline(average_age, color='r', linestyle='solid', linewidth=3, label="Mean")
-# plt.axvline(median_age, color='y', linestyle='dotted', linewidth=3, label="Median")
-# plt.axvline(mode_age, color='orange', linestyle='dashed', linewidth=3, label="Mode")
-# plt.legend()
-#
-# plt.show()
+    def current_temp(self):
+        return self.current_weather['temperature']
+
+    def feels_like(self):
+        return self.current_weather['feels_like']
+
+    def humidity(self):
+        return self.current_weather['humidity']
+
+    def uvi(self):
+        return round(self.current_weather['uvi'], 1)
+
+    def create_bar_chart(self, input_location=None, x_axis=None, y_axis=None):
+        # TODO: figure out args from routes to dynamically render charts
+        if input_location is not None:
+            self.get_forecast(input_location)
+        fig = Figure()
+        ax = fig.add_axes([0, 0, 1, 1])
+        x_axis = Weather.list_constructor(self.hourly_weather, 'time')
+        y_axis = Weather.list_constructor(self.hourly_weather, 'temperature')
+        bars = ax.bar(x_axis, y_axis)
+        ax.bar_label(bars)
+        return mpld3.fig_to_html(fig)

@@ -28,19 +28,29 @@
       </form>
     {% else %}
       <br>
+      <h3>Current Weather</h3>
+      <ul class="weather-stats">
+        <li>Conditions: {{ conditions }}</li>
+        <li>Temperature: {{ current_temp }} °F</li>
+        <li>Feels Like: {{ feels_like }} °F</li>
+        <li>Humidity: {{ humidity }}%</li>
+        <li>UV Index: {{ uvi }}</li>
+      </ul>
+      <br>
       <h3>Hourly Weather <em>(Next 8 Hours)</em></h3>
-      <ul>
+      <ul class="weather-stats">
         <li>Average Temperature: {{ avg_hourly }} °F</li>
         <li>Median Temperature: {{ median_hourly }} °F</li>
         <li>Conditions: {{ hourly_conditions }}</li>
       </ul>
       <br>
       <h3>Daily Weather <em>(Next 5 Days)</em></h3>
-      <ul>
+      <ul class="weather-stats">
         <li>Average High: {{ avg_daily_highs }} °F</li>
         <li>Average Low: {{ avg_daily_lows }} °F</li>
         <li>Conditions: {{ daily_conditions }}</li>
       </ul>
+      <br>
     {% endif %}
   </div>
 {% endblock %}

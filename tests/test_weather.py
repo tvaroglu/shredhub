@@ -16,7 +16,7 @@ class TestWeather:
     def test_sanitize_request_params(self):
         self.city_format_1 = 'Denver'
         self.city_format_2 = 'denver'
-        self.city_format_3 = 'DENVER'
+        self.city_format_3 = 'DENVER,'
         self.city_formats = [
             self.city_format_1,
             self.city_format_2,
@@ -26,14 +26,30 @@ class TestWeather:
             assert Weather.sanitize_request_params(f, 'CO') == 'denver,co'
 
     def test_reformat_input_location(self):
-        assert Weather.reformat_input_location('denver,co') == 'Denver'
+        self.location_1 = 'denver,co'
+        self.location_2 = 'crested butte,co'
+        assert Weather.reformat_input_location(self.location_1) == 'Denver'
+        assert Weather.reformat_input_location(self.location_2) == 'Crested Butte'
+
+    def test_current_forecast_data(self):
+        self.weather = Weather()
+        assert self.weather.current_weather == {}
+        self.current_forecast = self.weather.get_forecast('denver,co')
+        assert str(type(self.current_forecast)) == "<class 'app.weather.Weather'>"
+        self.current_weather = self.weather.current_weather
+        assert len(self.current_weather.keys()) == 10
+        assert isinstance(self.weather.conditions(), str)
+        assert isinstance(self.weather.current_temp(), float)
+        assert isinstance(self.weather.feels_like(), float)
+        assert isinstance(self.weather.humidity(), int)
+        assert isinstance(self.weather.uvi(), float)
 
     def test_hourly_forecast_data(self):
         self.weather = Weather()
         assert self.weather.hourly_weather == {}
         assert self.weather.input_location == ''
         self.weather.get_forecast('denver,co')
-        assert self.weather.input_location == 'Denver'
+        assert self.weather.input_location == 'denver,co'
         self.hourly_weather = self.weather.hourly_weather
         assert len(self.hourly_weather) == 8
         for h in self.hourly_weather:
@@ -53,14 +69,6 @@ class TestWeather:
         assert isinstance(self.weather.avg_daily_highs(), float)
         assert isinstance(self.weather.avg_daily_lows(), float)
         assert isinstance(self.weather.forecasted_conditions('daily'), str)
-
-    def test_current_forecast_data(self):
-        self.weather = Weather()
-        assert self.weather.current_weather == {}
-        self.current_forecast = self.weather.get_forecast('denver,co')
-        assert str(type(self.current_forecast)) == "<class 'app.weather.Weather'>"
-        self.current_weather = self.weather.current_weather
-        assert len(self.current_weather.keys()) == 10
 
     def test_list_constructor(self):
         self.weather = Weather()
@@ -94,3 +102,9 @@ class TestWeather:
         for state_abbreviation in self.state_abbreviations_list:
             assert isinstance(state_abbreviation, str)
             assert len(state_abbreviation) == 2
+
+    def test_create_bar_chart(self):
+        self.weather = Weather()
+        self.plot = self.weather.create_bar_chart('denver,co', ['one', 'two', 'three'], [1, 2, 3])
+        # assert str(type(self.plot)) == "<class 'matplotlib.figure.Figure'>"
+        assert isinstance(self.plot, str)
