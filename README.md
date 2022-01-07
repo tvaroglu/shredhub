@@ -26,54 +26,54 @@
 
 ### <ins>Framework</ins>
 <p>
-  <img src="https://img.shields.io/badge/Flask-181717.svg?&style=flaste&logo=flask&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask-181717.svg?&style=flat&logo=flask&logoColor=white" />
 </p>
 
 #### Languages
 <p>
-  <img src="https://img.shields.io/badge/Python-1572B6.svg?&style=flaste&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/HTML5-0EB201.svg?&style=flaste&logo=html5&logoColor=white" />
-  <img src="https://img.shields.io/badge/CSS3-0EB201.svg?&style=flaste&logo=css3&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-1572B6.svg?&style=flat&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/HTML5-0EB201.svg?&style=flat&logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/CSS3-0EB201.svg?&style=flat&logo=css3&logoColor=white" />
 </p>
 
 #### Tools
 <p>
-  <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=flaste&logo=atom&logoColor=white" />  
-  <img src="https://img.shields.io/badge/Git-FF6E4F.svg?&style=flaste&logo=git&logoColor=white" />
-  <img src="https://img.shields.io/badge/GitHub-181717.svg?&style=flaste&logo=github&logoColor=white" />
-  <img src="https://img.shields.io/badge/Heroku-430098.svg?&style=flaste&logo=heroku&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?&style=flaste&logo=postgresql&logoColor=white" />
-  <img src="https://img.shields.io/badge/Sendgrid-4169E1.svg?&style=flaste&logo=twilio&logoColor=white" />
+  <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=flat&logo=atom&logoColor=white" />  
+  <img src="https://img.shields.io/badge/Git-FF6E4F.svg?&style=flat&logo=git&logoColor=white" />
+  <img src="https://img.shields.io/badge/GitHub-181717.svg?&style=flat&logo=github&logoColor=white" />
+  <img src="https://img.shields.io/badge/Heroku-430098.svg?&style=flat&logo=heroku&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?&style=flat&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Sendgrid-4169E1.svg?&style=flat&logo=twilio&logoColor=white" />
   <img src="https://img.shields.io/badge/CircleCI-181717.svg?&style=flat&logo=circle&logoColor=white" />
 </p>
 
 #### Packages
 <p>
-  <img src="https://img.shields.io/badge/Flask-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask--Login-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask--Mail-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask--Moment-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask--WTF-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Jinja2-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask--Login-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask--Mail-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask--Moment-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flask--WTF-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Jinja2-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
   </br>
-  <img src="https://img.shields.io/badge/psycopg2-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/SQLAlchemy-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/python--dotenv-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/PyJWT-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/pytest--cov-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/pytest--vcr-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/psycopg2-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/SQLAlchemy-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/python--dotenv-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/PyJWT-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/pytest--cov-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/pytest--vcr-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
   </br>
-  <img src="https://img.shields.io/badge/Werkzeug-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/gunicorn-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/requests-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/numpy-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
-  <img src="https://img.shields.io/badge/scipy-1572B6.svg?&style=flaste&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Werkzeug-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/gunicorn-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/requests-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/numpy-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/scipy-1572B6.svg?&style=flat&logo=pypi&logoColor=white" />
 </p>
 
 #### Development Principles
 <p>
-  <img src="https://img.shields.io/badge/OOP-b81818.svg?&style=flaste&logo=OOP&logoColor=white" />
-  <img src="https://img.shields.io/badge/TDD-b87818.svg?&style=flaste&logo=TDD&logoColor=white" />
+  <img src="https://img.shields.io/badge/OOP-b81818.svg?&style=flat&logo=OOP&logoColor=white" />
+  <img src="https://img.shields.io/badge/TDD-b87818.svg?&style=flat&logo=TDD&logoColor=white" />
 </p>
 
 ### <ins>Contributors</ins>
