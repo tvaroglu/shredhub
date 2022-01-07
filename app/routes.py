@@ -17,6 +17,7 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
         g.search_form = SearchForm()
+        g.weather = Weather()
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -74,26 +75,30 @@ def search():
 @login_required
 def weather():
     form = WeatherReportForm()
-    weather = Weather()
     if form.validate_on_submit():
-        input_location = Weather.sanitize_request_params(form.city.data, form.state.data)
-        if weather.get_forecast(input_location) == Weather.api_error():
+        location = Weather.sanitize_request_params(form.city.data, form.state.data)
+        if g.weather.get_forecast(location) == Weather.api_error():
             flash('Sorry! The weather API is currently unavailable, please try again later.')
-        flash(f'Now showing weather reports for: {Weather.reformat_input_location(form.city.data)}')
+        flash(f'Now showing weather reports for: {Weather.reformat_input_location(location)}')
         return render_template('main/weather.html', title='Weather Report',
-                        location=input_location,
-                        avg_hourly=weather.avg_hourly_temp(),
-                        median_hourly=weather.median_hourly_temp(),
-                        hourly_conditions=weather.forecasted_conditions('hourly'),
-                        avg_daily_highs=weather.avg_daily_highs(),
-                        avg_daily_lows=weather.avg_daily_lows(),
-                        daily_conditions=weather.forecasted_conditions('daily'))
+                        location=location,
+                        conditions=g.weather.conditions(),
+                        current_temp=g.weather.current_temp(),
+                        feels_like=g.weather.feels_like(),
+                        humidity=g.weather.humidity(),
+                        uvi=g.weather.uvi(),
+                        avg_hourly=g.weather.avg_hourly_temp(),
+                        median_hourly=g.weather.median_hourly_temp(),
+                        hourly_conditions=g.weather.forecasted_conditions('hourly'),
+                        avg_daily_highs=g.weather.avg_daily_highs(),
+                        avg_daily_lows=g.weather.avg_daily_lows(),
+                        daily_conditions=g.weather.forecasted_conditions('daily'))
     return render_template('main/weather.html', title='Weather Report', form=form)
 
 @app.route('/static/plot.png')
 def plot_png():
-    weather = Weather()
-    fig = weather.create_plot()
+    # g.weather.input_location = 'denver,co'
+    fig = g.weather.create_bar_chart(g.weather.input_location)
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
