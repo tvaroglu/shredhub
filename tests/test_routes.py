@@ -162,3 +162,18 @@ class TestRoutes:
         assert 'State' in self.response
         assert 'Search' in self.response
         TestRoutes.tear_down(test_app)
+
+    def test_send_message(self, test_app, dummy_user):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        self.request = self.client.get(f'/send_message/{self.user.username}')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Send Message to:' in self.response
+        assert self.user.username in self.response
+        assert 'Message' in self.response
+        assert 'Submit' in self.response
+        TestRoutes.tear_down(test_app)

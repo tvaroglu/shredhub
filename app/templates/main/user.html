@@ -16,6 +16,9 @@
                       {{ form.submit(value='Follow') }}
                   </form>
                 {% else %}
+                  <a href="{{ url_for('send_message', recipient=user.username) }}" class="btn btn-light btn-outline-dark" style="font-size:0.955em;">Message</a>
+                  <br>
+                  <br>
                   <form action="{{ url_for('follow', username=user.username, action='unfollow') }}" method="post">
                       {{ form.hidden_tag() }}
                       {{ form.submit(value='Unfollow') }}

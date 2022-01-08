@@ -1,11 +1,9 @@
 from app import app, db
-from app.models import User, Post
+from app.models import User, Post, Message
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, WeatherReportForm
+from app.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, WeatherReportForm, MessageForm
 from app.email import send_password_reset_email
 from app.weather import Weather
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-import io
 from datetime import datetime
 from flask import g, render_template, request, flash, redirect, url_for, Response
 from flask_login import current_user, login_user, logout_user, login_required
@@ -95,13 +93,20 @@ def weather():
                         daily_conditions=g.weather.forecasted_conditions('daily'))
     return render_template('main/weather.html', title='Weather Report', form=form)
 
-@app.route('/static/plot.png')
-def plot_png():
-    # g.weather.input_location = 'denver,co'
-    fig = g.weather.create_bar_chart(g.weather.input_location)
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
+@app.route('/send_message/<recipient>', methods=['GET', 'POST'])
+@login_required
+def send_message(recipient):
+    user = User.query.filter_by(username=recipient).first_or_404()
+    form = MessageForm()
+    if form.validate_on_submit():
+        msg = Message(author=current_user, recipient=user,
+                      body=form.message.data)
+        db.session.add(msg)
+        db.session.commit()
+        flash('Your message has been sent.')
+        return redirect(url_for('user', username=recipient))
+    return render_template('main/send_message.html', title='Send Message',
+                           form=form, recipient=recipient)
 
 @app.route('/user/<username>')
 @login_required
