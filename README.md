@@ -22,7 +22,7 @@
 
 </br>
 
-**Shredhub** is a `Flask` application in which users can write about their favorite places to shred, follow their fellow shredders, check out weather reports for their favorite resorts, and search blog posts to track down those hidden powder stashes... assuming folks decide to share them! 😎
+**Shredhub** is a `Flask` application in which users can write about their favorite places to shred, follow and message their fellow shredders, check out weather reports for their favorite resorts, and search blog posts to track down those hidden powder stashes... assuming folks decide to share them! 😎
 
 ### <ins>Framework</ins>
 <p>
@@ -108,7 +108,7 @@ $ source venv/bin/activate
 (venv) $ flask db upgrade
 ```
 
-<img src="https://user-images.githubusercontent.com/58891447/148630764-9291ea25-69dc-4303-a5b4-8cff49dbc34f.png" width=100%/>  
+<img src="https://user-images.githubusercontent.com/58891447/148630851-544959dd-95d4-4f42-89e3-bb24dff44f9e.png" width=100%/>  
 
 #### How to run the test suite:
 ```bash
