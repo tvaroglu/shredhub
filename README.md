@@ -108,7 +108,7 @@ $ source venv/bin/activate
 (venv) $ flask db upgrade
 ```
 
-<img src="https://user-images.githubusercontent.com/58891447/148485667-6504813d-7688-4228-babc-172777d5bcde.png" width=100%/>  
+<img src="https://user-images.githubusercontent.com/58891447/148630764-9291ea25-69dc-4303-a5b4-8cff49dbc34f.png" width=100%/>  
 
 #### How to run the test suite:
 ```bash

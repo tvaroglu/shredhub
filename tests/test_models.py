@@ -187,6 +187,7 @@ class TestModels:
         db.session.add(self.user)
         db.session.commit()
         assert self.user.new_messages() == 0
+        TestModels.tear_down(test_app)
 
     def test_message_attributes(self, test_app, dummy_user):
         TestModels.test_db_setup(test_app)
