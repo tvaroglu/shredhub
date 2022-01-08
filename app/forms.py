@@ -79,3 +79,8 @@ class WeatherReportForm(FlaskForm):
     city = StringField('City', validators=[DataRequired()])
     state = SelectField('State', validators=[DataRequired()], choices=Weather.state_abbreviations_list())
     submit = SubmitField('Search')
+
+class MessageForm(FlaskForm):
+    message = TextAreaField('Message', validators=[
+        DataRequired(), Length(min=1, max=1000)])
+    submit = SubmitField('Submit')
