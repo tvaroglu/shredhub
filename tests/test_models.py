@@ -1,15 +1,17 @@
 import pytest
 from datetime import datetime, timedelta
 from app import db
-from app.models import User, Post, load_user
+from app.models import User, load_user, Post, Message
 
 class TestModels:
     @classmethod
     def test_db_setup(cls, test_app):
         cls.users = User.query.all()
         cls.posts = Post.query.all()
+        cls.messages = Message.query.all()
         assert len(cls.users) == 0
         assert len(cls.posts) == 0
+        assert len(cls.messages) == 0
 
     @classmethod
     def tear_down(cls, test_app):
@@ -30,6 +32,8 @@ class TestModels:
         assert isinstance(self.user.created_at, datetime)
         assert isinstance(self.user.updated_at, datetime)
         assert isinstance(self.user.last_seen, datetime)
+        assert str(type(self.user.messages_sent)) == "<class 'sqlalchemy.orm.dynamic.AppenderBaseQuery'>"
+        assert str(type(self.user.messages_received)) == "<class 'sqlalchemy.orm.dynamic.AppenderBaseQuery'>"
         TestModels.tear_down(test_app)
 
     def test__repr__(self, test_app, dummy_user):
@@ -175,4 +179,35 @@ class TestModels:
         db.session.add_all([self.post_1, self.post_2, self.post_3, self.post_4])
         db.session.commit()
         assert Post.search('post from admin').all() == [self.post_3, self.post_2, self.post_1]
+        TestModels.tear_down(test_app)
+
+    def test_new_messages(self, test_app, dummy_user):
+        TestModels.test_db_setup(test_app)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        assert self.user.new_messages() == 0
+
+    def test_message_attributes(self, test_app, dummy_user):
+        TestModels.test_db_setup(test_app)
+        self.user_1 = dummy_user
+        self.user_2 = User(username='Guest', email='guest@example.com')
+        now = datetime.utcnow()
+        self.message = Message(body='test message',
+                               author=self.user_1,
+                               recipient=self.user_2,
+                               created_at=now)
+        assert self.message.__repr__() == f'<Message: {self.message.body}>'
+        db.session.add(self.user_1)
+        db.session.add(self.user_2)
+        db.session.add(self.message)
+        db.session.commit()
+        assert len(Message.query.all()) == 1
+        assert isinstance(self.message, Message)
+        assert self.message.body == 'test message'
+        assert self.message.sender_id == self.user_1.id
+        assert self.message.recipient_id == self.user_2.id
+        assert isinstance(self.message.created_at, datetime)
+        assert self.user_1.new_messages() == 0
+        assert self.user_2.new_messages() == 1
         TestModels.tear_down(test_app)

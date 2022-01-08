@@ -28,6 +28,13 @@ class User(UserMixin, db.Model):
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='author', lazy='dynamic')
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='recipient', lazy='dynamic')
+    last_message_read_time = db.Column(db.DateTime)
 
     def __repr__(self):
         return f'<User: {self.username}>'
@@ -41,7 +48,7 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         # see Gravatar docs for additional config options (default image, size, etc):
-        # https://en.gravatar.com/site/implement/images
+            # https://en.gravatar.com/site/implement/images
         # TODO: explore options for users to customize their own profile pictures
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
@@ -70,6 +77,11 @@ class User(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256')
 
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return Message.query.filter_by(recipient=self).filter(
+            Message.created_at > last_read_time).count()
+
     @staticmethod
     def verify_password_reset_token(token):
         try:
@@ -94,7 +106,8 @@ def load_user(id):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
+    # body = db.Column(db.String(140))
+    body = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -106,3 +119,15 @@ class Post(db.Model):
         return Post.query.filter(
             Post.body.ilike(f'%{criteria}%')).order_by(
             Post.created_at.desc())
+
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # body = db.Column(db.String(140))
+    body = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Message: {self.body}>'
