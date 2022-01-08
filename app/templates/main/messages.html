@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container flex-wrap-reverse card text-dark bg-light mb-3 card-custom">
+    <h1>Messages:</h1>
+    {% for post in messages %}
+        {% include 'main/_post.html' %}
+    {% endfor %}
+    {% if prev_url %}
+      <br>
+      <a href="{{ prev_url }}">Newer Messages</a>
+    {% endif %}
+    {% if next_url %}
+      <br>
+      <a href="{{ next_url }}">Older Messages</a>
+    {% endif %}
+  </div>
+{% endblock %}

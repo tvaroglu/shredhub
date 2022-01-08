@@ -108,6 +108,24 @@ def send_message(recipient):
     return render_template('main/send_message.html', title='Send Message',
                            form=form, recipient=recipient)
 
+@app.route('/messages')
+@login_required
+def messages():
+    if current_user.is_authenticated:
+        current_user.last_message_read_time = datetime.utcnow()
+        db.session.commit()
+        page = request.args.get('page', 1, type=int)
+        messages = current_user.messages_received.order_by(
+            Message.created_at.desc()).paginate(
+                page, app.config['POSTS_PER_PAGE'], False)
+        next_url = url_for('messages', page=messages.next_num) \
+            if messages.has_next else None
+        prev_url = url_for('messages', page=messages.prev_num) \
+            if messages.has_prev else None
+        return render_template('main/messages.html', messages=messages.items,
+                               next_url=next_url, prev_url=prev_url)
+    return render_template('main/messages.html')
+
 @app.route('/user/<username>')
 @login_required
 def user(username):

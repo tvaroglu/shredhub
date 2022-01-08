@@ -91,6 +91,9 @@
                     <a class="nav-link active" aria-current="page" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
                   </li>
                   <li class="nav-item nav-hover">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('messages') }}">Messages</a>
+                  </li>
+                  <li class="nav-item nav-hover">
                     <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
                   </li>
                 {% endif %}

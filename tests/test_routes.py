@@ -177,3 +177,15 @@ class TestRoutes:
         assert 'Message' in self.response
         assert 'Submit' in self.response
         TestRoutes.tear_down(test_app)
+
+    def test_messages(self, test_app, dummy_user):
+        self.generator = TestRoutes.set_up(test_app)
+        self.client = next(self.generator)
+        self.user = dummy_user
+        db.session.add(self.user)
+        db.session.commit()
+        self.request = self.client.get('/messages')
+        assert self.request.status_code == 200
+        self.response = str(self.request.data)
+        assert 'Messages:' in self.response
+        TestRoutes.tear_down(test_app)
