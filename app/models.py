@@ -93,7 +93,7 @@ class User(UserMixin, db.Model):
 
     @staticmethod
     def clean_username(username):
-        forbidden_characters = "/\\"
+        forbidden_characters = " /\\"
         for char in forbidden_characters:
             username = username.replace(char, '')
         return username

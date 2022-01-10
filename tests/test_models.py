@@ -161,8 +161,10 @@ class TestModels:
 
     def test_clean_username(self, test_app):
         TestModels.test_db_setup(test_app)
-        self.bad_username = 'Admin/\\'
-        assert User.clean_username(self.bad_username) == 'Admin'
+        self.bad_username_1 = 'Admin/\\'
+        self.bad_username_2 = ' Ad min '
+        assert User.clean_username(self.bad_username_1) == 'Admin'
+        assert User.clean_username(self.bad_username_2) == 'Admin'
 
     def test_post_search(self, test_app, dummy_user):
         TestModels.test_db_setup(test_app)
