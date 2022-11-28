@@ -4,4 +4,4 @@ logs/
 .coverage
 .pytest_cache
 .env
-
+.flaskenv
