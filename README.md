@@ -41,7 +41,8 @@
   <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=flat&logo=atom&logoColor=white" />  
   <img src="https://img.shields.io/badge/Git-FF6E4F.svg?&style=flat&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/GitHub-181717.svg?&style=flat&logo=github&logoColor=white" />
-  <img src="https://img.shields.io/badge/Heroku-430098.svg?&style=flat&logo=heroku&logoColor=white" />
+  <!-- <img src="https://img.shields.io/badge/Heroku-430098.svg?&style=flat&logo=heroku&logoColor=white" /> -->
+  <img src="https://img.shields.io/badge/Docker-4169E1.svg?&style=flat&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1.svg?&style=flat&logo=postgresql&logoColor=white" />
   <img src="https://img.shields.io/badge/Sendgrid-4169E1.svg?&style=flat&logo=twilio&logoColor=white" />
   <img src="https://img.shields.io/badge/CircleCI-181717.svg?&style=flat&logo=circle&logoColor=white" />
@@ -110,13 +111,14 @@ $ source venv/bin/activate
 
 <img src="https://user-images.githubusercontent.com/58891447/148630851-544959dd-95d4-4f42-89e3-bb24dff44f9e.png" width=100%/>  
 
-#### How to run the test suite:
+#### How to Run the Test Suite:
 ```bash
 $ source venv/bin/activate
-(venv) $ pytest --cov
+(venv) $ pytest
 ```
 
-#### How to run the server:
+#### How to Run the Local Server:
+##### via Flask:
 ```bash
 $ source venv/bin/activate
 (venv) $ flask run
@@ -129,8 +131,14 @@ $ source venv/bin/activate
 * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
-#### Link to deployed application:
-Check it out [here](https://shredhub.herokuapp.com/login)!
+##### via Docker:
+```bash
+$ docker-compose -f docker-compose-local.yml build && docker image prune
+$ docker-compose -f docker-compose-local.yml up
+```
+
+<!-- #### Link to deployed application:
+Check it out [here](https://shredhub.herokuapp.com/login)! -->
 
 </br>
 

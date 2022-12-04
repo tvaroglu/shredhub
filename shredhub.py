@@ -14,14 +14,17 @@ def create_db():
 # return dict (vs list) to provide a name under which each obj is referenced in the shell (via dict keys):
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': db, 'mail': mail, 'User': User, 'Post': Post, 'Message': Message, 'reset_db': reset_db}
+    imports = {'db': db, 'mail': mail, 'user': User, 'post': Post, 'message': Message, 'reset_db': reset_db}
+    return imports
 
 def reset_db():
-    imports = {'db': db, 'User': User, 'Post': Post, 'Message': Message}
-    users = User.query.all()
-    posts = Post.query.all()
-    messages = Message.query.all()
-
+    imports = {'db': db, 'user': User, 'post': Post, 'message': Message}
+    users = imports['user'].query.all()
+    posts = imports['post'].query.all()
+    messages = imports['message'].query.all()
+    # print(users)
+    # print(posts)
+    # print(messages)
     for u in users:
         db.session.delete(u)
     for p in posts:
@@ -29,6 +32,7 @@ def reset_db():
     for m in messages:
         db.session.delete(m)
     db.session.commit()
+
 
 if __name__ == 'main':
     cli()
