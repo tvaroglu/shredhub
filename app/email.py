@@ -15,6 +15,7 @@ def send_email(subject, sender, recipients, text_body, html_body):
 
 def send_password_reset_email(user):
     token = user.get_password_reset_token()
+    # print(user.email)
     send_email('Shredhub Password Reset',
                sender=app.config['ADMINS'][0],
                recipients=[user.email],

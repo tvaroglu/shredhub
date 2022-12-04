@@ -5,8 +5,18 @@ load_dotenv()
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace(
+    DATABASE_URL = os.environ.get('DATABASE_URL', '').replace(
         'postgres://', 'postgresql://')
+    if os.environ.get('DOCKER_ENV', '') != '':
+        POSTGRES_DB       = os.environ['POSTGRES_DB']
+        POSTGRES_HOST     = os.environ['POSTGRES_HOST']
+        POSTGRES_USER     = os.environ['POSTGRES_USER']
+        POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+        POSTGRES_PORT     = os.environ['POSTGRES_PORT']
+        SQLALCHEMY_DATABASE_URI = \
+            f"{DATABASE_URL.split('//')[0]}//{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+    else:
+        SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 20
     MAIL_SERVER = 'smtp.sendgrid.net'

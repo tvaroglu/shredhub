@@ -2,6 +2,7 @@ import os
 from config import Config
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import create_engine
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -13,6 +14,8 @@ app = Flask(__name__)
 # see docs for more detail on .from_object() function:
 # https://www.kite.com/python/docs/flask.Config.from_object
 app.config.from_object(Config)
+# db_conn = app.config['SQLALCHEMY_DATABASE_URI']
+# db_engine = create_engine(db_conn)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
