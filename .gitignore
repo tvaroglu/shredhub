@@ -1,5 +1,6 @@
 **/__pycache__
 /venv
+/postgres-data
 logs/
 .coverage
 .pytest_cache
