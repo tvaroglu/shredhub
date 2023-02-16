@@ -54,7 +54,7 @@ toml==0.10.2
 tomli==1.2.2
 urllib3==1.26.7
 vcrpy==4.1.1
-Werkzeug==2.0.2
+Werkzeug==2.2.3
 wrapt==1.13.3
 WTForms==3.0.0
 yarl==1.7.2
